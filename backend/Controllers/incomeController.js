@@ -67,8 +67,20 @@ export const updateIncome = async(req,res)=>{
     }
 }
 export const deleteIncome = async(req,res)=>{
+    const incomeId = req.params.id
+
+    if(!incomeId){
+        return res.status(400).json({message : "Missing income id"})
+    }
+
+    if(!Types.ObjectId.isValid(incomeId)){
+        return res.status(400).json({message : "Invalid income id"})
+    }
+
     try {
-        
+        const income = await incomeModel.findByIdAndDelete(incomeId)
+
+        res.status(200).json({message : income})
     } catch (error) {
         res.status(500).json({message:error.message})
     }

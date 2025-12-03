@@ -70,8 +70,20 @@ export const updateExpense = async(req,res)=>{
     }
 }
 export const deleteExpense = async(req,res)=>{
+    const expenseId = req.params.id
+    
+    if(!expenseId){
+        return res.status(400).json({message : "Missing expense id"})
+    }
+
+    if(!Types.ObjectId.isValid(expenseId)){
+        return res.status(400).json({message : "Invalid expense id"})
+    }
+
     try {
-        
+        const expense = await expenseModel.findByIdAndDelete(expenseId)
+
+        res.status(200).json({message : expense})
     } catch (error) {
         res.status(500).json({message:error.message})
     }
