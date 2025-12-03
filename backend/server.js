@@ -1,6 +1,7 @@
 import "dotenv/config"
 import express from "express"
 import dbConnect from "./Config/dbConfig.js"
+import router from "./Routes/transactionRouter.js"
 
 // APP DECLARATION
 const app = express() 
@@ -12,7 +13,7 @@ const PORT = process.env.PORT || 3000
 app.use(express.json())
 
 // ROUTING
-
+app.use("/api/transactions",router)
 
 // APP LISTEN
 app.listen(PORT,async()=>{
