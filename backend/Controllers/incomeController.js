@@ -1,3 +1,4 @@
+import { Types } from "mongoose"
 import { incomeModel } from "../Models/incomeModel.js"
 import  validator from "validator"
 
@@ -36,15 +37,31 @@ export const addIncome = async(req,res)=>{
     try {
         const income = await incomeModel.create({title,amount,category,description,date})
 
-        res.status(200).json({message:income})
+        res.status(201).json({message:income})
         
     } catch (error) {        
         res.status(500).json({message:error.message})
     }
 }
 export const updateIncome = async(req,res)=>{
+    const incomeId = req.params.id
+    const {title,amount,category,description,date} = req.body
+
+    if(!incomeId){
+        return res.status(400).json({message : "Missing income id"})
+    }
+
+    if(!Types.ObjectId.isValid(incomeId)){
+        return res.status(400).json({message : "Invalid income id"})
+    }
+
+    if(!title || !amount || !category || !description || !date){
+        return res.status(400).json({message : "Fill in all required fields"})
+    }
+
     try {
-        
+        const income = await incomeModel.findByIdAndUpdate({_id:incomeId},{title,amount,category,description,date})
+        res.status(200).json({message : income})
     } catch (error) {
         res.status(500).json({message:error.message})
     }
