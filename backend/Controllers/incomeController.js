@@ -20,6 +20,10 @@ export const addIncome = async(req,res)=>{
 
     const {title,amount,category,description,date} = req.body
 
+    if(!title || !amount || !category || !description || !date){
+        return res.status(400).json({message:"Please fill in all fields"})
+    }
+
     const parsedAmount = parseFloat(amount)
 
     if(isNaN(parsedAmount)){
@@ -30,14 +34,10 @@ export const addIncome = async(req,res)=>{
         return res.status(400).json({message:"Date format should be (YYYY-MM-DD)"})
     }
 
-    if(!title || !amount || !category || !description || !date){
-        return res.status(400).json({message:"Please fill in all fields"})
-    }
-
     try {
         const income = await incomeModel.create({title,amount,category,description,date})
 
-        res.status(201).json({message:income})
+        res.status(201).json({message:"Income Added Successfully"})
         
     } catch (error) {        
         res.status(500).json({message:error.message})
@@ -61,7 +61,7 @@ export const updateIncome = async(req,res)=>{
 
     try {
         const income = await incomeModel.findByIdAndUpdate({_id:incomeId},{title,amount,category,description,date})
-        res.status(200).json({message : income})
+        res.status(200).json({message : "Income Updated Successfully"})
     } catch (error) {
         res.status(500).json({message:error.message})
     }
@@ -80,7 +80,7 @@ export const deleteIncome = async(req,res)=>{
     try {
         const income = await incomeModel.findByIdAndDelete(incomeId)
 
-        res.status(200).json({message : income})
+        res.status(200).json({message : "Income Deleted Successfully"})
     } catch (error) {
         res.status(500).json({message:error.message})
     }

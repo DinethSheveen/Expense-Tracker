@@ -36,7 +36,7 @@ export const addExpense = async(req,res)=>{
     try {
         const expense = await expenseModel.create({title,amount,category,description,date})
 
-        res.status(201).json({message:expense})
+        res.status(201).json({message:"Expense Added Successfully"})
 
     } catch (error) {        
         res.status(500).json({message:error.message})
@@ -61,7 +61,7 @@ export const updateExpense = async(req,res)=>{
     
         try {
             const expense = await expenseModel.findByIdAndUpdate({_id:expenseId},{title,amount,category,description,date})
-            res.status(200).json({message : expense})
+            res.status(200).json({message : "Expense Updated Successfully"})
         } catch (error) {
             res.status(500).json({message:error.message})
         }
@@ -83,7 +83,7 @@ export const deleteExpense = async(req,res)=>{
     try {
         const expense = await expenseModel.findByIdAndDelete(expenseId)
 
-        res.status(200).json({message : expense})
+        res.status(200).json({message : "Expense Deleted Successfully"})
     } catch (error) {
         res.status(500).json({message:error.message})
     }
