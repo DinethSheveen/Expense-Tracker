@@ -4,7 +4,7 @@ import validator from "validator"
 
 export const retreiveExpense = async(_,res)=>{
     try {
-            const expense = await expenseModel.find() 
+            const expense = await expenseModel.find().sort({createdAt:-1}) 
     
             if(!expense){
                 return res.status(200).json({message:"Expense list is empty. Please add the expense details"})
