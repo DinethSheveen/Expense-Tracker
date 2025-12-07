@@ -77,9 +77,20 @@ export default function TransactionContextProvider({children}) {
     }
 
     // DELETE EXPENSE
+    const deleteExpense = async(id)=>{
+        try {
+            const response = await axios.delete(`http://localhost:3000/api/transactions/expense/${id}`)
+            setDeleteSuccess(response.data.message)
+            setTimeout(()=>{
+                setDeleteSuccess(null)
+            },3000)
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
   return (
-    <TransactionContext.Provider value={{addIncome,getAllIncome,allIncome,deleteIncome,deleteSuccess,addExpense,getAllExpense,allExpense,error,success}}>
+    <TransactionContext.Provider value={{addIncome,getAllIncome,allIncome,deleteIncome,deleteSuccess,addExpense,getAllExpense,allExpense,deleteExpense,error,success}}>
         {children}  
     </TransactionContext.Provider>
   )
