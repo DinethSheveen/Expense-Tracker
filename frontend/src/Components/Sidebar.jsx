@@ -27,7 +27,7 @@ function Sidebar() {
         {menuLinks.map((menuLink,index)=>{
           return(
             <NavLink key={index} to={menuLink.endpoint} className={({isActive})=>
-              `flex items-center gap-1 transition-all ${isActive?"border-b-3 border-l-3 pl-1 border-b-gray-500 text-gray-500 font-bold":""}`}>
+              `flex items-center gap-1 hover:border-b-3 border-gray-500 transition-all ${isActive?"border-b-3 border-l-3 pl-1 border-b-gray-500 text-gray-500 font-bold":""}`}>
               {menuLink.icon}
               {menuLink.text}
             </NavLink>
