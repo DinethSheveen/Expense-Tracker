@@ -8,10 +8,6 @@ function Income() {
 
   const {addIncome,getAllIncome,allIncome,error,success,deleteSuccess} = useContext(TransactionContext)
 
-  useEffect(()=>{
-    getAllIncome()
-  },[getAllIncome])
-
   const [inputs, setInputs] = useState({
     title:"",
     amount:"",
@@ -24,19 +20,35 @@ function Income() {
     e.preventDefault()
     addIncome(inputs)
     
-    setInputs(prevInputs => ({...prevInputs,title : ""}))
-    setInputs(prevInputs => ({...prevInputs,amount : ""}))
-    setInputs(prevInputs => ({...prevInputs,category : ""}))
-    setInputs(prevInputs => ({...prevInputs,description : ""}))
-    setInputs(prevInputs => ({...prevInputs,date : ""}))
+    if(!error){
+      setInputs(prevInputs => ({...prevInputs,title : ""}))
+      setInputs(prevInputs => ({...prevInputs,amount : ""}))
+      setInputs(prevInputs => ({...prevInputs,category : ""}))
+      setInputs(prevInputs => ({...prevInputs,description : ""}))
+      setInputs(prevInputs => ({...prevInputs,date : ""}))
+    }
   }
 
+  const calcTotal = ()=>{
+    let total =0 
+    allIncome.map((income)=>{
+      total += income.amount
+    })
+    return(total);
+  }
+  const totalIncome = calcTotal()
+  
+
+  useEffect(()=>{
+    getAllIncome()
+  },[success,deleteSuccess])
+
   return (
-    <div className='homepage flex-1 justify-center border-3 border-gray-600 max-h-[80vh] rounded-[10px] py-6 px-2'>
+    <div className='homepage flex-1 justify-center shadow-2xs shadow-gray-600 max-h-[80vh] rounded-[10px] py-6 px-2'>
       <p className='text-3xl font-bold mb-2'>Income</p>
       
       <div className="my-4 text-2xl font-bold text-center p-2 bg-gray-800 rounded-[10px]">
-        <p>Total Income : </p>
+        <p>Total Income : <span className="text-green-500">${totalIncome}</span></p>
       </div>
 
       <div className="flex gap-4">
@@ -77,7 +89,7 @@ function Income() {
           </div>
         </div>
       </div>
-      
+
       {/* ALERT MESSAGES */}
       {
         error && 

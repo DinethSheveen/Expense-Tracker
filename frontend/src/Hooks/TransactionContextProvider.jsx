@@ -16,15 +16,15 @@ export default function TransactionContextProvider({children}) {
         try {
             const response = await axios.post("http://localhost:3000/api/transactions/income",income)
             setError(null)
-            setSuccess(response.data.message);
-            setTimeout(()=>{
-                setSuccess(null)
-            },3000)
-            
+            setSuccess(response.data.message);            
         } catch (error) {
             setSuccess(null)
             setError(error.response.data.message);
         }
+        setTimeout(()=>{
+            setSuccess(null)
+            setError(null)
+        },3000)
     }
 
     // ADD EXPENSES
@@ -32,15 +32,15 @@ export default function TransactionContextProvider({children}) {
         try {
             const response = await axios.post("http://localhost:3000/api/transactions/expense",expense)
             setError(null)
-            setSuccess(response.data.message);
-            setTimeout(()=>{
-                setSuccess(null)
-            },3000)
-            
+            setSuccess(response.data.message);            
         } catch (error) {
             setSuccess(null)
             setError(error.response.data.message);
         }
+        setTimeout(()=>{
+            setSuccess(null)
+            setError(null)
+        },3000)
     }
 
     // RETRIEVE INCOME

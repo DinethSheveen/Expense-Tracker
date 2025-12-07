@@ -53,7 +53,7 @@ return (
         </div>
         </div>
 
-        <div className="rounded-full bg-gray-800 text-red-700 p-4 cursor-pointer hover:bg-gray-700 hover:text-red-600 active:bg-gray-600 active:text-red-500">
+        <div className="rounded-full bg-gray-800 text-red-700 text-2xl p-2 cursor-pointer hover:bg-gray-700 hover:text-red-600 active:bg-gray-600 active:text-red-500">
             <RiDeleteBin5Fill onClick={()=>{deleteIncome(income._id)}}/>
         </div>
     </div>
