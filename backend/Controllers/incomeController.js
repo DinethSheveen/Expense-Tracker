@@ -4,7 +4,7 @@ import  validator from "validator"
 
 export const retreiveIncome = async(_,res)=>{
     try {
-        const income = await incomeModel.find() 
+        const income = await incomeModel.find().sort({createdAt:-1})
 
         if(!income){
             return res.status(200).json({message:"Income list is empty. Please add the income details"})
