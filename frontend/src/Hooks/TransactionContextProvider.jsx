@@ -7,7 +7,9 @@ export default function TransactionContextProvider({children}) {
 
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
+    const [deleteSuccess, setDeleteSuccess] = useState(null)
     const [allIncome,setAllIncome] = useState([])
+    const [allExpense,setAllExpense] = useState([])
 
     // ADD INCOME
     const addIncome = async(income)=>{
@@ -32,7 +34,6 @@ export default function TransactionContextProvider({children}) {
             setError(null)
             setSuccess(response.data.message);
             setTimeout(()=>{
-                setError(null)
                 setSuccess(null)
             },3000)
             
@@ -52,8 +53,33 @@ export default function TransactionContextProvider({children}) {
         }
     }
 
+    // RETRIEVE EXPENSES
+    const getAllExpense = async()=>{
+        try {
+            const response = await axios.get("http://localhost:3000/api/transactions/expense")
+            setAllExpense(response.data.message);
+        } catch (error) {
+            console.log(error.response.data.message);
+        }
+    }
+
+    // DELETE INCOME
+    const deleteIncome = async(id)=>{
+        try {
+            const response = await axios.delete(`http://localhost:3000/api/transactions/income/${id}`)
+            setDeleteSuccess(response.data.message)
+            setTimeout(()=>{
+                setDeleteSuccess(null)
+            },3000)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // DELETE EXPENSE
+
   return (
-    <TransactionContext.Provider value={{addIncome,addExpense,getAllIncome,allIncome,error,success}}>
+    <TransactionContext.Provider value={{addIncome,getAllIncome,allIncome,deleteIncome,deleteSuccess,addExpense,getAllExpense,allExpense,error,success}}>
         {children}  
     </TransactionContext.Provider>
   )
