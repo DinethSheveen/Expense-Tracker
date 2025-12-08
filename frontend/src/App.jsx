@@ -4,13 +4,13 @@ import HomePage from "./Pages/HomePage"
 import Dashboard from "./Pages/Dashboard"
 import Income from "./Pages/Income"
 import Expense from "./Pages/Expense"
-import Sidebar from "./Components/Sidebar"
+import Navbar from "./Components/Navbar"
 import AllTransactions from "./Pages/AllTransactions"
 
 function App() {
   return (
-    <div className="bg-black min-h-screen text-white flex items-center gap-2 px-2">
-      <Sidebar/>
+    <div className="bg-black text-white">
+      <Navbar/>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
