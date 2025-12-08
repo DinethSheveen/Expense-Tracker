@@ -85,3 +85,18 @@ export const deleteIncome = async(req,res)=>{
         res.status(500).json({message:error.message})
     }
 }
+
+export const incomeByDate = async(_,res)=>{
+    try {
+        const income = await incomeModel.find().sort({date:1}) 
+
+        if(!income){
+            return res.status(200).json({message:"Expense list is empty. Please add the expense details"})
+        }
+
+        res.status(200).json({message : income})
+    
+    } catch (error) {
+        res.status(500).json({message:error.message})
+    }
+}
