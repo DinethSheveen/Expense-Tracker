@@ -1,7 +1,6 @@
 import {Line} from "react-chartjs-2"
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement,PointElement, Title, Legend, Tooltip } from "chart.js"
 import { useEffect, useState } from "react"
-import {TransactionContext} from "../Hooks/TransactionContextProvider"
 import dayjs from "dayjs"
 import axios from "axios"
 
@@ -63,13 +62,7 @@ function Chart() {
   const expenseAmounts = dates.map(date => {
     const matched = expenses.find(expense => dayjs(expense.date).format("DD/MM/YYYY") === date);
     return matched ? matched.amount : 0;
-  });
-
-
-  console.log(expenseAmounts);
-  console.log(incomeAmounts);
-  console.log(dates);
-  
+  });  
   
   const options = {}
   
@@ -90,7 +83,12 @@ function Chart() {
   }
 
   return (
-    <div className="h-100"><Line options={options} data={data}/></div>
+    <>
+    {dates?
+      <div className="h-60 flex-2 mx-auto bg-gray-900 rounded-[10px] p-2"><Line options={options} data={data}/></div>
+    :
+      <div className="flex flex-2 items-center text-3xl h-60 font-bold">No Data to Visualize...</div>}
+    </>
   )
 }
 
