@@ -44,16 +44,14 @@ function Income() {
   },[success,deleteSuccess])
 
   return (
-    <div className='homepage flex-1 justify-center shadow-2xs shadow-gray-600 max-h-[80vh] rounded-[10px] py-6 px-2'>
-      <p className='text-3xl font-bold mb-2'>Income</p>
-      
+    <div className='homepage flex-1 justify-center rounded-[10px] pt-20 px-2'>      
       <div className="my-4 text-2xl font-bold text-center p-2 bg-gray-800 rounded-[10px]">
         <p>Total Income : <span className="text-green-500">${totalIncome}</span></p>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-4 md:flex-row">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input type="text" placeholder="Income Title" className="outline-none shadow-2xs shadow-gray-600 rounded-[5px] p-2 focus:ring-1 focus:ring-cyan-500" value={inputs.title} onChange={(e)=>{setInputs(prevInputs => ({...prevInputs,title:e.target.value}))}}/>
+          <input type="text" placeholder="Income Title" className="outline-none shadow-2xs shadow-gray-600 rounded-[5px] p-2 focus:ring-1 focus:ring-cyan-500" value={inputs.title} onChange={(e)=>{setInputs(prevInputs => ({...prevInputs,title:e.target.value.trim()}))}}/>
           
           <input type="number" placeholder="Income Figures" className="outline-none shadow-2xs shadow-gray-600 rounded-[5px] p-2 focus:ring-1 focus:ring-cyan-500" value={inputs.amount} onChange={(e)=>{setInputs(prevInputs => ({...prevInputs,amount:e.target.value}))}}/>
           
@@ -70,7 +68,7 @@ function Income() {
             </select>
           </div>
 
-          <input type="text" placeholder="Income Description" className="outline-none shadow-2xs shadow-gray-600 rounded-[5px] p-2 focus:ring-1 focus:ring-cyan-500" value={inputs.description} onChange={(e)=>{setInputs(prevInputs => ({...prevInputs,description:e.target.value}))}}/>
+          <textarea placeholder="Add a Reference..." rows={1} cols={1} className="resize-none text-[15px] outline-none shadow-2xs shadow-gray-600 rounded-[5px] p-2 focus:ring-1 focus:ring-cyan-500" value={inputs.description} onChange={(e)=>{setInputs(prevInputs => ({...prevInputs,description:e.target.value.trim()}))}}/>
           
           <input type="text" placeholder="YYYY-MM-DD" className="outline-none shadow-2xs shadow-gray-600 rounded-[5px] p-2 focus:ring-1 focus:ring-cyan-500" value={inputs.date} onChange={(e)=>{setInputs(prevInputs => ({...prevInputs,date:e.target.value}))}}/>
           <button className="flex items-center justify-center gap-1 p-2 rounded-full bg-gray-600 hover:bg-gray-700 active:bg-gray-800 cursor-pointer">
@@ -79,7 +77,7 @@ function Income() {
           </button>
         </form>
 
-        <div className="flex-1 h-100 overflow-x-none overflow-y-scroll scrollbar-hide">
+        <div className="flex-1 h-110 overflow-x-none overflow-y-scroll scrollbar-hide">
           <div className="flex flex-col gap-4">
             {allIncome && allIncome.map((income)=>{
               return(

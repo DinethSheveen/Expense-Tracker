@@ -21,7 +21,7 @@ function ExpenseComponent({expense}) {
     const formattedDate = dayjs(expense.date).format("DD/MM/YYYY");
 
 return (
-    <div className="flex justify-between items-center bg-gray-900 p-4 rounded-[5px] border-2 border-gray-700 font-bold hover:border-cyan-500">
+    <div className="flex justify-between items-center bg-gray-900 p-2 rounded-[5px] border-2 border-gray-700 font-bold hover:border-cyan-500 md:p-4">
         {/* ICON */}
         <div className="border-2 border-gray-500 p-2 rounded-[10px] text-2xl">
             {
@@ -35,9 +35,9 @@ return (
             }
         </div>
 
-        <div className="flex flex-col items-center justify-between">
+        <div className="flex flex-col gap-2 items-center justify-between">
         <p>{expense.category}</p>
-        <div className="flex justify-between items-center gap-4">
+        <div className="flex flex-col justify-between items-center gap-4 sm:flex-row">
             <div className="flex items-center gap-1">
                 <CiDollar className="text-2xl"/>
                 {expense.amount}
