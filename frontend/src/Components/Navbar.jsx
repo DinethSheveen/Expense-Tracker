@@ -54,6 +54,7 @@ function Sidebar() {
       <RiMenuUnfold2Line className="flex text-white text-3xl md:hidden" onClick={handleSidebar}/>
       </div>
       
+      <div className="fixed right-0 top-0">
         <div className={`sidebar min-h-screen absolute transition-all duration-1000 top-0 right-0 bg-gray-800 overflow-hidden md:hidden ${sidebar? "w-64 opacity-100" : "w-0 opacity-0"}`}>
           <TbXboxX className="text-3xl absolute right-3 top-5" onClick={handleSidebar}/>
           {/* LINKS */}
@@ -73,8 +74,8 @@ function Sidebar() {
             <LiaSignOutAltSolid className="text-2xl"/>
             <p className="font-bold">Sign Out</p>
           </div>
-        </div>:""
-      
+        </div>
+      </div>
     </div>
   )
 }
