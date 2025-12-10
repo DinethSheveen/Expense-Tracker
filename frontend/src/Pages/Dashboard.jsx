@@ -1,11 +1,38 @@
+import { useContext, useEffect } from "react"
 import Chart from "../Components/Chart"
+import { TransactionContext } from "../Hooks/TransactionContextProvider"
 
 function Dashboard() {
 
+  const {allIncome,getAllIncome,allExpense,getAllExpense} = useContext(TransactionContext)
+  
+  // GETTING THE TOTAL INCOME
+  const getTotalIncome = ()=>{
+    let totalIncome = 0 
+    allIncome.map((income)=>{
+      totalIncome += income.amount
+    })
+    return totalIncome;
+  }
+
+  // GETTING THE TOTAL INCOME
+  const getTotalExpense = ()=>{
+    let totalExpense = 0 
+    allExpense.map((expense)=>{
+      totalExpense += expense.amount
+    })
+    return totalExpense;
+  }
+  
+  useEffect(()=>{
+    getAllIncome()
+    getAllExpense()
+  },[])
+
   return (
-    <div className='dashboard flex-1 justify-center pt-30 rounded-[10px] px-4'>
+    <div className='dashboard flex-1 justify-center rounded-[10px] pt-30 pb-10 px-4'>
       {/* FLEX CONTAINER */}
-      <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:gap-2">
+      <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:gap-4">
         {/* LEFT - CHART */}
         <Chart/>
 
@@ -30,43 +57,45 @@ function Dashboard() {
       </div>
 
       {/* FLEX CONTAINER */}
-      <div className="flex justify-between items-start gap-4 mt-5">
-        <div className="flex-1 grid grid-cols-1 gap-5 md:grid-cols-2 md:flex-2">
-          <div className="rounded-[5px] bg-gray-700 border-2 border-gray-500 p-2 text-2xl font-bold flex flex-col">
+      <div className="flex justify-between items-start gap-4 mt-5 md:flex-row">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 flex-1 md:flex-2">
+          <div className="rounded-[5px] border-2 border-green-800 p-2 font-bold flex flex-col md:text-2xl text-green-500">
             <p>Total Income</p>
-            <p>$8000</p>
+            <p>${getTotalIncome()}</p>
           </div>
-          <div className="rounded-[5px] bg-gray-700 border-2 border-gray-500 p-2 text-2xl font-bold flex flex-col">
+          <div className="rounded-[5px] border-2 border-red-800 p-2 font-bold flex flex-col md:text-2xl text-red-500">
             <p>Total Expense</p>
-            <p>$4000</p>
+            <p>${getTotalExpense()}</p>
           </div>
-          <div className="rounded-[5px] bg-gray-700 border-2 border-gray-500 p-2 text-2xl font-bold flex flex-col">
+          <div className="rounded-[5px] border-2 border-cyan-800 p-2 font-bold flex flex-col md:text-2xl text-cyan-500">
             <p>Profit Margin</p>
-            <p>$4000</p>
+            <p>${getTotalIncome() - getTotalExpense()}</p>
           </div>
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-between gap-8 h-full">
           <div className="flex flex-col w-full">
-            <div className="flex justify-between items-center px-2 font-bold">
+            <div className="flex justify-between items-center gap-3 px-2 font-bold">
               <p>Min</p>
-              <p>Salary</p>
+              <p>Income</p>
               <p>Max</p>
             </div>
-            <div className="flex justify-between items-center rounded-[5px] bg-gray-700 border-2 border-gray-500 py-4 px-2">
-              <p className="text-2xl">20</p>
-              <p className="text-2xl">200</p>
+            <div className="flex justify-between items-center gap-3 rounded-[5px] bg-gray-700 border-2 border-gray-500 py-4 px-2 md:text-2xl">
+              <p>20</p>
+              <p>Salary</p>
+              <p>200</p>
             </div>
           </div>
           <div className="flex flex-col w-full">
-            <div className="flex justify-between items-center px-2 font-bold">
+            <div className="flex justify-between items-center gap-3 px-2 font-bold">
               <p>Min</p>
-              <p>Salary</p>
+              <p>Expense</p>
               <p>Max</p>
             </div>
-            <div className="flex justify-between items-center rounded-[5px] bg-gray-700 border-2 border-gray-500 py-4 px-2">
-              <p className="text-2xl">20</p>
-              <p className="text-2xl">200</p>
+            <div className="flex justify-between items-center gap-3 rounded-[5px] bg-gray-700 border-2 border-gray-500 py-4 px-2 md:text-2xl">
+              <p>20</p>
+              <p>Bill shaka boom</p>
+              <p>200</p>
             </div>
           </div>
         </div>

@@ -89,7 +89,7 @@ function Chart() {
   return (
     <>
     {dates?
-      <div className="h-60 flex-2 mx-auto bg-gray-900 rounded-[10px] p-2"><Line options={options} data={data}/></div>
+      <div className="h-60 w-full flex-2 mx-auto bg-gray-900 rounded-[10px] p-2"><Line options={options} data={data}/></div>
     :
       <div className="flex flex-2 items-center text-3xl text-center h-60 font-bold">No Data to Visualize...</div>}
     </>
