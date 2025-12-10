@@ -3,6 +3,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, LineElement,PointElement,
 import { useEffect, useState } from "react"
 import dayjs from "dayjs"
 import axios from "axios"
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
 ChartJS.register(CategoryScale, LinearScale, LineElement,PointElement, Title, Legend, Tooltip)
 
@@ -11,8 +12,6 @@ function Chart() {
   const dates = []
   const [incomes, setIncomes] = useState([])
   const [expenses, setExpenses] = useState([])
-  // const incomeAmounts = []
-  // const expenseAmounts = []
 
   useEffect(()=>{
     const fetchIncome = async()=>{
@@ -51,14 +50,19 @@ function Chart() {
       dates.push(formattedDate)
     }
   })
+
+  // EXTEND CUSTOM DAYJS DATE FORMAT TO SORT THE ARRAY OF DATES IN HE ASCENDING ORDER
+  dayjs.extend(customParseFormat);
+  dates.sort((a,b)=>dayjs(a,"DD/MM/YYYY").valueOf() - dayjs(b,"DD/MM/YYYY").valueOf())
   
-  dates.sort((a,b)=>dayjs(a).valueOf() - dayjs(b).valueOf())
-  
+
+  // GETTING THE RESPECTIVE INCOME AMOUNTS ACCORDING TO THE DATE     
   const incomeAmounts = dates.map(date => {
     const matched = incomes.find(income => dayjs(income.date).format("DD/MM/YYYY") === date);
     return matched ? matched.amount : 0;
   });
 
+  // GETTING THE RESPECTIVE EXPENSE AMOUNTS ACCORDING TO THE DATE     
   const expenseAmounts = dates.map(date => {
     const matched = expenses.find(expense => dayjs(expense.date).format("DD/MM/YYYY") === date);
     return matched ? matched.amount : 0;
@@ -87,7 +91,7 @@ function Chart() {
     {dates?
       <div className="h-60 flex-2 mx-auto bg-gray-900 rounded-[10px] p-2"><Line options={options} data={data}/></div>
     :
-      <div className="flex flex-2 items-center text-3xl h-60 font-bold">No Data to Visualize...</div>}
+      <div className="flex flex-2 items-center text-3xl text-center h-60 font-bold">No Data to Visualize...</div>}
     </>
   )
 }
