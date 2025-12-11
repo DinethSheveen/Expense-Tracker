@@ -22,7 +22,42 @@ function Dashboard() {
     },0)
     return totalExpense;
   }
+
+  // GETTING THE MIN AND MAX INCOME
+  const getMinMaxIncome = (finances)=>{
+    if(!finances || finances.length===0){
+      return 0
+    }
+
+    const minIncome = finances.reduce((currentValue,income)=>{
+      return currentValue > income.amount? income.amount : currentValue
+    },finances[0].amount)
+
+    const maxIncome = finances.reduce((currentValue,income)=>{
+      return currentValue < income.amount? income.amount : currentValue
+    },finances[0].amount)
+
+    return [minIncome,maxIncome];
+  }  
+
+  // GETTING THE MIN AND MAX EXPENSE
+  const getMinMaxExpense = (finances)=>{
+    if(!finances || finances.length===0){
+      return 0
+    }
+
+    const minExpense = finances.reduce((currentValue,income)=>{
+      return currentValue > income.amount? income.amount : currentValue
+    },finances[0].amount)
+
+    const maxExpense = finances.reduce((currentValue,income)=>{
+      return currentValue < income.amount? income.amount : currentValue
+    },finances[0].amount)
+    
+    return [minExpense,maxExpense];
+  }  
   
+  // GETTING THE MAX INCOME
   useEffect(()=>{
     getAllIncome()
     getAllExpense()
@@ -76,25 +111,23 @@ function Dashboard() {
           <div className="flex flex-col w-full">
             <div className="flex justify-between items-center gap-3 px-2 font-bold">
               <p>Min</p>
-              <p>Income</p>
               <p>Max</p>
             </div>
-            <div className="flex justify-between items-center gap-3 rounded-[5px] bg-gray-700 border-2 border-gray-500 py-4 px-2 md:text-2xl">
-              <p>20</p>
-              <p>Salary</p>
-              <p>200</p>
+            <div className="flex justify-between items-center gap-3 rounded-[5px] bg-gray-700 border-2 border-gray-500 py-4 px-2">
+              <p>{getMinMaxIncome(allIncome)[0]}</p>
+              <p>Income</p>
+              <p>{getMinMaxIncome(allIncome)[1]}</p>
             </div>
           </div>
           <div className="flex flex-col w-full">
             <div className="flex justify-between items-center gap-3 px-2 font-bold">
               <p>Min</p>
-              <p>Expense</p>
               <p>Max</p>
             </div>
-            <div className="flex justify-between items-center gap-3 rounded-[5px] bg-gray-700 border-2 border-gray-500 py-4 px-2 md:text-2xl">
-              <p>20</p>
-              <p>Bill shaka boom</p>
-              <p>200</p>
+            <div className="flex justify-between items-center gap-3 rounded-[5px] bg-gray-700 border-2 border-gray-500 py-4 px-2">
+              <p>{getMinMaxExpense(allExpense)[0]}</p>
+              <p>Expense</p>
+              <p>{getMinMaxExpense(allExpense)[1]}</p>
             </div>
           </div>
         </div>
