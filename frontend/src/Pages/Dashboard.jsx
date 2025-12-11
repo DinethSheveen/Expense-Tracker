@@ -8,19 +8,18 @@ function Dashboard() {
   
   // GETTING THE TOTAL INCOME
   const getTotalIncome = ()=>{
-    let totalIncome = 0 
-    allIncome.map((income)=>{
-      totalIncome += income.amount
-    })
-    return totalIncome;
+    const totalIncome = allIncome.reduce((currentTotal,income)=>{
+      return currentTotal+income.amount
+    },0)
+
+    return totalIncome
   }
 
   // GETTING THE TOTAL INCOME
   const getTotalExpense = ()=>{
-    let totalExpense = 0 
-    allExpense.map((expense)=>{
-      totalExpense += expense.amount
-    })
+    const totalExpense = allExpense.reduce((currentTotal,expense)=>{
+      return currentTotal+expense.amount
+    },0)
     return totalExpense;
   }
   
