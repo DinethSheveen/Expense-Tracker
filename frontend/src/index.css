@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme{
+  --breakpoint-xs : 26rem;  
+}
+
 @layer utilities {
   .scrollbar-hide {
     -ms-overflow-style: none; /* IE/Edge */
