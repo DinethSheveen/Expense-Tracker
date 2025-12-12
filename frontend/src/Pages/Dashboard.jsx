@@ -1,6 +1,9 @@
 import { useContext, useEffect } from "react"
 import Chart from "../Components/Chart"
 import { TransactionContext } from "../Hooks/TransactionContextProvider"
+import MinMaxFinances from "../Components/MinMaxFinances"
+import TotalFinances from "../Components/TotalFinances"
+import RecentHistory from "../Components/RecentHistory"
 
 function Dashboard() {
 
@@ -71,65 +74,24 @@ function Dashboard() {
         <Chart/>
 
         {/* RIGHT - RECENT HISTORY */}
-        <div className="history flex-1 w-full px-4 md:w-auto md:px-0">
-          <p className="text-center mb-3 font-bold">Recent History</p>
-          <div className="flex flex-col gap-5">
-            <div className="flex justify-between gap-3 items-center bg-gray-700 py-4 px-2 rounded-[5px]">
-              <p>Income</p>
-              <p>34</p>
-            </div>
-            <div className="flex justify-between gap-3 items-center bg-gray-700 py-4 px-2 rounded-[5px]">
-              <p>Income</p>
-              <p>34</p>
-            </div>
-            <div className="flex justify-between gap-3 items-center bg-gray-700 py-4 px-2 rounded-[5px]">
-              <p>Income</p>
-              <p>34</p>
-            </div>
-          </div>
-        </div>
+        <RecentHistory allIncome={allIncome} allExpense={allExpense}/>
       </div>
 
       {/* FLEX CONTAINER */}
-      <div className="flex justify-between items-start gap-4 mt-5 md:flex-row">
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 flex-1 md:flex-2">
-          <div className="rounded-[5px] border-2 border-green-800 p-2 font-bold flex flex-col md:text-2xl text-green-500">
-            <p>Total Income</p>
-            <p>${getTotalIncome()}</p>
-          </div>
-          <div className="rounded-[5px] border-2 border-red-800 p-2 font-bold flex flex-col md:text-2xl text-red-500">
-            <p>Total Expense</p>
-            <p>${getTotalExpense()}</p>
-          </div>
+      <div className="flex flex-col justify-between items-start gap-4 mt-5 xs:flex-row">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 flex-1 md:flex-2 w-full">
+          <TotalFinances getTotalIncome={getTotalIncome} border={"border-green-800"} text={"text-green-500"}/>
+          <TotalFinances getTotalIncome={getTotalExpense}  border={"border-red-500"} text={"text-red-500"}/>
+
           <div className="rounded-[5px] border-2 border-cyan-800 p-2 font-bold flex flex-col md:text-2xl text-cyan-500">
             <p>Profit Margin</p>
             <p>${getTotalIncome() - getTotalExpense()}</p>
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-between gap-8 h-full">
-          <div className="flex flex-col w-full">
-            <div className="flex justify-between items-center gap-3 px-2 font-bold">
-              <p>Min</p>
-              <p>Max</p>
-            </div>
-            <div className="flex justify-between items-center gap-3 rounded-[5px] bg-gray-700 border-2 border-gray-500 py-4 px-2">
-              <p>{getMinMaxIncome(allIncome)[0]}</p>
-              <p>Income</p>
-              <p>{getMinMaxIncome(allIncome)[1]}</p>
-            </div>
-          </div>
-          <div className="flex flex-col w-full">
-            <div className="flex justify-between items-center gap-3 px-2 font-bold">
-              <p>Min</p>
-              <p>Max</p>
-            </div>
-            <div className="flex justify-between items-center gap-3 rounded-[5px] bg-gray-700 border-2 border-gray-500 py-4 px-2">
-              <p>{getMinMaxExpense(allExpense)[0]}</p>
-              <p>Expense</p>
-              <p>{getMinMaxExpense(allExpense)[1]}</p>
-            </div>
-          </div>
+        <div className="flex flex-1 flex-col items-center justify-between gap-8 h-full w-full">
+          <MinMaxFinances getMinMaxIncome={getMinMaxIncome} allIncome={allIncome} title={"Income"}/>
+          <MinMaxFinances getMinMaxIncome={getMinMaxExpense} allIncome={allExpense} title={"Expense"}/>
         </div>
       </div >
 
