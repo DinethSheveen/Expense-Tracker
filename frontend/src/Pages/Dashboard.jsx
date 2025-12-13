@@ -31,11 +31,13 @@ function Dashboard() {
     if(!finances || finances.length===0){
       return 0
     }
-
+    
+    // MIN INCOME
     const minIncome = finances.reduce((currentValue,income)=>{
       return currentValue > income.amount? income.amount : currentValue
     },finances[0].amount)
 
+    // MAX INCOME
     const maxIncome = finances.reduce((currentValue,income)=>{
       return currentValue < income.amount? income.amount : currentValue
     },finances[0].amount)
@@ -49,10 +51,12 @@ function Dashboard() {
       return 0
     }
 
+    // MIN EXPENSE
     const minExpense = finances.reduce((currentValue,income)=>{
       return currentValue > income.amount? income.amount : currentValue
     },finances[0].amount)
 
+    // MAX EXPENSE
     const maxExpense = finances.reduce((currentValue,income)=>{
       return currentValue < income.amount? income.amount : currentValue
     },finances[0].amount)
@@ -60,7 +64,6 @@ function Dashboard() {
     return [minExpense,maxExpense];
   }  
   
-  // GETTING THE MAX INCOME
   useEffect(()=>{
     getAllIncome()
     getAllExpense()
@@ -90,8 +93,8 @@ function Dashboard() {
         </div>
 
         <div className="flex flex-1 flex-col items-center justify-between gap-8 h-full w-full">
-          <MinMaxFinances getMinMaxIncome={getMinMaxIncome} allIncome={allIncome} title={"Income"}/>
-          <MinMaxFinances getMinMaxIncome={getMinMaxExpense} allIncome={allExpense} title={"Expense"}/>
+          <MinMaxFinances getMinMaxFinance={getMinMaxIncome} financeData={allIncome} title={"Income"}/>
+          <MinMaxFinances getMinMaxFinance={getMinMaxExpense} financeData={allExpense} title={"Expense"}/>
         </div>
       </div >
 
