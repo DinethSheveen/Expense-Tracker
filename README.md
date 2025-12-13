@@ -1,16 +1,118 @@
-# React + Vite
+# Expense Tracker 💸
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern and responsive **Expense Tracker** web application built with **MERN STACK** to help users track and manage their expenses and income with ease. This project includes a frontend UI and a backend API for storing and retrieving financial data.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 Features
 
-## React Compiler
+✔️ Add new expenses and income with amount, category and date  <br>
+✔️ View a list of all expenses and income   <br>
+✔️ Edit or delete existing expenses and income   <br>
+✔️ Filter or sort expenses by date or category    <br>
+✔️ Responsive UI for both desktop and mobile   <br>
+✔️ Database storing and fetching  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 📁 Project Structure
+Expense-Tracker/ <br>
+├── backend/ #  API <br>
+├── frontend/ # React + Vite frontend <br>
+├── .gitignore <br>
+├── README.md 
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Frontend | React, JavaScript, Vite |
+| Backend  | Node.js, Express |
+| Styling  | TailwindsCSS |
+| Storage  | MongoDB |
+
+---
+
+##  📸 Screenshots 
+
+### 🏠 Dashboard
+![Dashboard](/frontend/public/dashboard.png)
+
+### ➕ Add Income
+![Add Expense](/frontend//public/income.png)
+
+### ➕ Add Expense
+![Add Expense](/frontend/public/expense.png)
+
+### 📋 Finance List
+![All-Transactions](/frontend/public/all-transactions.png)
+
+
+---
+
+## 📦 Getting Started
+
+### Prerequisites
+Make sure you have **Node.js** and **npm** installed.
+
+## 🛠️ Backend (Node + Express)
+
+1. Change directory to backend
+```bash
+
+cd ../backend
+
+```
+
+2. Install dependencies
+```bash
+
+npm install
+
+```
+
+3. Start server:
+```bash
+
+npm run dev
+
+```
+
+---
+
+## 🧩Frontend (React + Vite)
+
+1. Clone the repo:
+```bash
+
+git clone https://github.com/DinethSheveen/Expense-Tracker.git
+cd Expense-Tracker/frontend
+
+```
+
+2. Install dependencies
+
+```bash
+
+npm install
+
+```
+
+3. Run in development mode:
+```bash
+
+npm run dev
+
+```
+
+---
+
+## 🎨 Usage
+
+- Use the UI to add a new expense or income by filling fields like amount, category, date & description.
+- View your logged expenses and income in a table or list.
+- Delete expense or income entries to manage your data.
+- Use filters to view expenses and income by date or amount 
+
