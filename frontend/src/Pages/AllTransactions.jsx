@@ -14,17 +14,9 @@ function AllTransactions() {
     getAllExpense()
   },[])
 
-  allIncome.forEach((income)=>{
-    return (
-      income.type = "Income"
-    )
-  })
+  allIncome.forEach((income)=>{return (income.type = "Income")})
 
-  allExpense.forEach((expense)=>{
-    return (
-      expense.type = "Expense"
-    )
-  })
+  allExpense.forEach((expense)=>{return (expense.type = "Expense")})
 
   const allFinances = [...allIncome,...allExpense]
 
