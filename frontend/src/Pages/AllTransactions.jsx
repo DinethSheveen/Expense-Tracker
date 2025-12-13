@@ -1,11 +1,15 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { TransactionContext } from "../Hooks/TransactionContextProvider"
 import dayjs from "dayjs"
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
 function AllTransactions() {
 
   const {allIncome,allExpense,getAllIncome,getAllExpense} = useContext(TransactionContext)
   
+  const [sortBy, setSortBy] = useState("Select an option")
+  const [filterBy, setFilterBy] = useState("All")
+
   useEffect(()=>{
     getAllIncome()
     getAllExpense()
@@ -25,9 +29,28 @@ function AllTransactions() {
 
   const allFinances = [...allIncome,...allExpense]
 
+  // FORMATTING THE DATE
   const formattedDate = (date)=>{
     return dayjs(date).format("DD-MM-YYYY")
   }
+
+  // SORTING AND FILTERING
+  const sortAndFilter = ()=>{
+    switch(sortBy){
+      case "Increasing":
+        return allFinances.sort((a,b)=>{return a.amount - b.amount})
+      case "Decreasing":
+        return allFinances.sort((a,b)=>{return b.amount - a.amount})
+      default:
+        allFinances
+    }
+  }
+
+  if(allFinances.length!=0){
+    console.log(dayjs(allFinances[0].date).format("DD/MM/YYYY"));
+  }
+  
+  sortAndFilter()
 
   return (
     <div className='all-transactions pt-20'>
@@ -35,16 +58,17 @@ function AllTransactions() {
       <div className="flex justify-center items-center flex-wrap gap-2 my-4">
         <div className="flex justify-center items-center p-2">
           <p className="font-bold p-2">Sort By</p>
-          <select className="border border-white p-1 rounded-[10px] cursor-pointer">
+          <select className="border border-white p-1 rounded-[10px] cursor-pointer" value={sortBy} onChange={(e)=>{setSortBy(e.target.value)}}>
+            <option value="Select an option" className="bg-gray-800">Select an option</option>
             <option value="Increasing" className="bg-gray-800">Increasing</option>
             <option value="Decreasing" className="bg-gray-800">Decreasing</option>
-            <option value="New - Old" className="bg-gray-800">New - Old</option>
-            <option value="Old - New" className="bg-gray-800">Old - New</option>
+            <option value="Newest - Oldest" className="bg-gray-800">Newest - Oldest</option>
+            <option value="Oldest - Newest" className="bg-gray-800">Oldest - Newest</option>
           </select>
         </div>
         <div className="flex justify-center items-center p-2">
           <p className="font-bold p-2">Filter By</p>
-          <select className="border border-white p-1 rounded-[10px] cursor-pointer">
+          <select className="border border-white p-1 rounded-[10px] cursor-pointer" value={filterBy} onChange={(e)=>{setFilterBy(e.target.value)}}>
             <option value="Income" className="bg-gray-800">Income</option>
             <option value="Expense" className="bg-gray-800">Expense</option>
           </select>
