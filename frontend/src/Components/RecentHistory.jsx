@@ -12,10 +12,12 @@ function RecentHistory({allIncome,allExpense}) {
     
     const allFinances = [...allIncome,...allExpense]
     
+    //SORTING THE FINANCES ACCORDING TO THE DATE
     allFinances.sort((a,b)=>{
         return (dayjs(b.date).valueOf() - (dayjs(a.date).valueOf()))
     })
 
+    // FIRST 3 TRANSACTIONS
     const recentFinances = allFinances.slice(0,3)
 
   return (

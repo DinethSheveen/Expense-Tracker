@@ -44,7 +44,7 @@ function Income() {
   },[success,deleteSuccess])
 
   return (
-    <div className='homepage flex-1 justify-center rounded-[10px] pt-20 px-2'>      
+    <div className='income flex-1 justify-center rounded-[10px] pt-20 px-2'>      
       <div className="my-4 text-2xl font-bold text-center p-2 bg-gray-800 rounded-[10px]">
         <p>Total Income : <span className="text-green-500">${totalIncome}</span></p>
       </div>
@@ -77,7 +77,7 @@ function Income() {
           </button>
         </form>
 
-        <div className="flex-1 h-110 overflow-x-none overflow-y-scroll scrollbar-hide">
+        <div className="flex-1 h-130 overflow-x-none overflow-y-scroll scrollbar-hide">
           <div className="flex flex-col gap-4">
             {allIncome && allIncome.map((income)=>{
               return(

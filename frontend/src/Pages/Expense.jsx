@@ -77,7 +77,7 @@ function Expense() {
           </button>
         </form>
 
-        <div className="flex-1 h-110 overflow-x-none overflow-y-scroll scrollbar-hide">
+        <div className="flex-1 h-130 overflow-x-none overflow-y-scroll scrollbar-hide">
           <div className="flex flex-col gap-4">
             {allExpense && allExpense.map((expense)=>{
               return(
