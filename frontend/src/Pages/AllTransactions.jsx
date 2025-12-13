@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { TransactionContext } from "../Hooks/TransactionContextProvider"
 import dayjs from "dayjs"
-import customParseFormat from "dayjs/plugin/customParseFormat";
 
 function AllTransactions() {
 
@@ -41,15 +40,15 @@ function AllTransactions() {
         return allFinances.sort((a,b)=>{return a.amount - b.amount})
       case "Decreasing":
         return allFinances.sort((a,b)=>{return b.amount - a.amount})
+      case "Newest - Oldest":
+        return allFinances.sort((a,b)=>{return dayjs(a.date,"DD/MM/YYYY") - dayjs(b.date,"DD/MM/YYYY")})
+      case "Oldest - Newest":
+        return allFinances.sort((a,b)=>{return dayjs(b.date,"DD/MM/YYYY") - dayjs(a.date,"DD/MM/YYYY")})
       default:
         allFinances
     }
   }
 
-  if(allFinances.length!=0){
-    console.log(dayjs(allFinances[0].date).format("DD/MM/YYYY"));
-  }
-  
   sortAndFilter()
 
   return (
@@ -69,6 +68,7 @@ function AllTransactions() {
         <div className="flex justify-center items-center p-2">
           <p className="font-bold p-2">Filter By</p>
           <select className="border border-white p-1 rounded-[10px] cursor-pointer" value={filterBy} onChange={(e)=>{setFilterBy(e.target.value)}}>
+            <option value="All" className="bg-gray-800">All</option>
             <option value="Income" className="bg-gray-800">Income</option>
             <option value="Expense" className="bg-gray-800">Expense</option>
           </select>
