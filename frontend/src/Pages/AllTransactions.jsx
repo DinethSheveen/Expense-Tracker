@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useMemo, useState } from "react"
 import { TransactionContext } from "../Hooks/TransactionContextProvider"
 import dayjs from "dayjs"
 
@@ -7,7 +7,7 @@ function AllTransactions() {
   const {allIncome,allExpense,getAllIncome,getAllExpense} = useContext(TransactionContext)
   
   const [sortBy, setSortBy] = useState("Select an option")
-  const [filterBy, setFilterBy] = useState("Income")
+  const [filterBy, setFilterBy] = useState("All")
 
   allIncome.forEach((income)=>{return (income.type = "Income")})
 
@@ -21,28 +21,37 @@ function AllTransactions() {
   }
 
   // SORTING AND FILTERING
-  const sortAndFilter = ()=>{     
-    switch(sortBy){
-      case "Increasing":
-        return allFinances.sort((a,b)=>{return a.amount - b.amount})
-      case "Decreasing":
-        return allFinances.sort((a,b)=>{return b.amount - a.amount})
-      case "Newest - Oldest":
-        return allFinances.sort((a,b)=>{return dayjs(a.date,"DD/MM/YYYY") - dayjs(b.date,"DD/MM/YYYY")})
-      case "Oldest - Newest":
-        return allFinances.sort((a,b)=>{return dayjs(b.date,"DD/MM/YYYY") - dayjs(a.date,"DD/MM/YYYY")})
-      default:
-        allFinances
-    }
+  const sortedAndFilteredFinances = useMemo(() => {
+  const data = [...allFinances]
+
+  // SORT
+  switch (sortBy) {
+    case "Most Expensive":
+      data.sort((a, b) => b.amount - a.amount)
+      break
+    case "Least Expensive":
+      data.sort((a, b) => a.amount - b.amount)
+      break
+    case "Latest - Oldest":
+      data.sort((a, b) => dayjs(b.date, "DD/MM/YYYY").valueOf() - dayjs(a.date, "DD/MM/YYYY").valueOf())
+      break
+    case "Oldest - Latest":
+      data.sort((a, b) => dayjs(a.date, "DD/MM/YYYY").valueOf() - dayjs(b.date, "DD/MM/YYYY").valueOf())
+      break
+    default:
+      break
   }
+
+  // FILTER
+  if (filterBy === "All") return data
+
+  return data.filter(record => record.type === filterBy)
+}, [allFinances, sortBy, filterBy])
 
   useEffect(()=>{
     getAllIncome()
     getAllExpense()
-    allFinances
   },[])
-
-  sortAndFilter()
 
   return (
     <div className='all-transactions pt-20'>
@@ -52,15 +61,16 @@ function AllTransactions() {
           <p className="font-bold p-2">Sort By</p>
           <select className="border border-white p-1 rounded-[10px] cursor-pointer" value={sortBy} onChange={(e)=>{setSortBy(e.target.value)}}>
             <option value="Select an option" className="bg-gray-800">Select an option</option>
-            <option value="Increasing" className="bg-gray-800">Increasing</option>
-            <option value="Decreasing" className="bg-gray-800">Decreasing</option>
-            <option value="Newest - Oldest" className="bg-gray-800">Newest - Oldest</option>
-            <option value="Oldest - Newest" className="bg-gray-800">Oldest - Newest</option>
+            <option value="Most Expensive" className="bg-gray-800">Most Expensive</option>
+            <option value="Least Expensive" className="bg-gray-800">Least Expensive</option>
+            <option value="Latest - Oldest" className="bg-gray-800">Latest - Oldest</option>
+            <option value="Oldest - Latest" className="bg-gray-800">Oldest - Latest</option>
           </select>
         </div>
         <div className="flex justify-center items-center p-2">
           <p className="font-bold p-2">Filter By</p>
           <select className="border border-white p-1 rounded-[10px] cursor-pointer" value={filterBy} onChange={(e)=>{setFilterBy(e.target.value)}}>
+            <option value="All" className="bg-gray-800">All</option>
             <option value="Income" className="bg-gray-800">Income</option>
             <option value="Expense" className="bg-gray-800">Expense</option>
           </select>
@@ -76,9 +86,8 @@ function AllTransactions() {
       </div>
 
       {/* Rows */}
-      {allFinances.map((finance) => {
+      {sortedAndFilteredFinances && sortedAndFilteredFinances.map((finance) => {
         return (
-          finance.type === filterBy?
             <div key={finance._id} className="grid grid-cols-1 sm:grid-cols-4 border-b last:border-b-0">
 
               {/* DATE */}
@@ -105,7 +114,6 @@ function AllTransactions() {
                 <div className="text-right">{finance.amount}</div>
               </div>
             </div>
-            :""
           )
       })}
       
