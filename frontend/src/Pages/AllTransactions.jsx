@@ -7,12 +7,7 @@ function AllTransactions() {
   const {allIncome,allExpense,getAllIncome,getAllExpense} = useContext(TransactionContext)
   
   const [sortBy, setSortBy] = useState("Select an option")
-  const [filterBy, setFilterBy] = useState("All")
-
-  useEffect(()=>{
-    getAllIncome()
-    getAllExpense()
-  },[])
+  const [filterBy, setFilterBy] = useState("Income")
 
   allIncome.forEach((income)=>{return (income.type = "Income")})
 
@@ -26,7 +21,7 @@ function AllTransactions() {
   }
 
   // SORTING AND FILTERING
-  const sortAndFilter = ()=>{
+  const sortAndFilter = ()=>{     
     switch(sortBy){
       case "Increasing":
         return allFinances.sort((a,b)=>{return a.amount - b.amount})
@@ -40,6 +35,12 @@ function AllTransactions() {
         allFinances
     }
   }
+
+  useEffect(()=>{
+    getAllIncome()
+    getAllExpense()
+    allFinances
+  },[])
 
   sortAndFilter()
 
@@ -60,7 +61,6 @@ function AllTransactions() {
         <div className="flex justify-center items-center p-2">
           <p className="font-bold p-2">Filter By</p>
           <select className="border border-white p-1 rounded-[10px] cursor-pointer" value={filterBy} onChange={(e)=>{setFilterBy(e.target.value)}}>
-            <option value="All" className="bg-gray-800">All</option>
             <option value="Income" className="bg-gray-800">Income</option>
             <option value="Expense" className="bg-gray-800">Expense</option>
           </select>
@@ -78,33 +78,35 @@ function AllTransactions() {
       {/* Rows */}
       {allFinances.map((finance) => {
         return (
-          <div key={finance._id} className="grid grid-cols-1 sm:grid-cols-4 border-b last:border-b-0">
+          finance.type === filterBy?
+            <div key={finance._id} className="grid grid-cols-1 sm:grid-cols-4 border-b last:border-b-0">
 
-            {/* DATE */}
-            <div className="p-3 font-medium">
-              <span className="sm:hidden font-semibold">Date : </span>
-              {formattedDate(finance.date)}
-            </div>
+              {/* DATE */}
+              <div className="p-3 font-medium">
+                <span className="sm:hidden font-semibold">Date : </span>
+                {formattedDate(finance.date)}
+              </div>
 
-            {/* TITLE */}
-            <div className="p-3 flex justify-between items-center sm:block">
-              <span className="sm:hidden font-semibold">Title</span>
-              <div className="text-right">{finance.title}</div>
-            </div>
+              {/* TITLE */}
+              <div className="p-3 flex justify-between items-center sm:block">
+                <span className="sm:hidden font-semibold">Title</span>
+                <div className="text-right">{finance.title}</div>
+              </div>
 
-            {/* TYPE */}
-            <div className="p-3 flex justify-between items-center sm:block">
-              <span className="sm:hidden font-semibold">Type</span>
-              <div className="text-right">{finance.type}</div>
-            </div>
+              {/* TYPE */}
+              <div className="p-3 flex justify-between items-center sm:block">
+                <span className="sm:hidden font-semibold">Type</span>
+                <div className="text-right">{finance.type}</div>
+              </div>
 
-            {/* AMOUNT */}
-            <div className="p-3 flex justify-between items-center sm:block">
-              <span className="sm:hidden font-semibold">Amount</span>
-              <div className="text-right">{finance.amount}</div>
+              {/* AMOUNT */}
+              <div className="p-3 flex justify-between items-center sm:block">
+                <span className="sm:hidden font-semibold">Amount</span>
+                <div className="text-right">{finance.amount}</div>
+              </div>
             </div>
-          </div>
-        );
+            :""
+          )
       })}
       
     </div>
