@@ -1,8 +1,10 @@
 import "dotenv/config"
 import express from "express"
 import dbConnect from "./Config/dbConfig.js"
-import router from "./Routes/transactionRouter.js"
+import transactionRouter from "./Routes/transactionRouter.js"
+import userRouter from "./Routes/userRouter.js"
 import cors from "cors"
+import authRouter from "./Routes/authRouter.js"
 
 // APP DECLARATION
 const app = express() 
@@ -15,7 +17,9 @@ app.use(express.json())
 app.use(cors())
 
 // ROUTING
-app.use("/api/transactions",router)
+app.use("/api/auth",authRouter)
+app.use("/api/user",userRouter)
+app.use("/api/transactions",transactionRouter)
 
 // APP LISTEN
 app.listen(PORT,async()=>{
