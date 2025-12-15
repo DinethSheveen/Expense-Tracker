@@ -1,6 +1,7 @@
 import { userModel } from "../Models/userModel.js"
 import validator from "validator"
 import bcrypt from "bcryptjs"
+import createToken from "../Config/jwt.js"
 
 export const register = async(req,res)=>{
     const {name,username,email,password} = req.body || {}
@@ -18,7 +19,6 @@ export const register = async(req,res)=>{
     }
 
     try {
-
         const exisitingEmail = await userModel.findOne({email})
 
         if(exisitingEmail.trim()){            
@@ -62,7 +62,8 @@ export const login = async(req,res)=>{
             return res.status(400).json({message : "Invalid credentials"})
         }
 
-        res.status(200).json({message : "Successfull Login"})
+        const token = createToken(user)
+        res.cookie("access_token",token,{httpOnly:true,maxAge : 3600*1000, sameSite : "strict"}).status(200).json({message : "Successfull Login"})
 
     } catch (error) {
         console.log(error.message);
