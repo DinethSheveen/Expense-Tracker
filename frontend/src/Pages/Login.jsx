@@ -2,9 +2,22 @@ import {Link, useNavigate} from "react-router-dom"
 import Button from "../Components/Button";
 import { useState } from "react";
 import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../Hooks/AuthContextProvider";
+import { useEffect } from "react";
 
 
 function Login() {
+
+  const {state,dispatch} = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if(state.isAuthenticated){
+      navigate("/")
+    }   
+  },[state.isAuthenticated,navigate])
+
   const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -13,38 +26,35 @@ function Login() {
       password : ""
     })
   
-    const navigate = useNavigate()
   
-    const handleSubmit = (e)=>{
+    const handleSubmit = async(e)=>{
       e.preventDefault()
   
-      const submitForm = async()=>{
-        setLoading(true)
-        try {
-          const response = await axios.post("http://localhost:3000/api/auth/login",{
+      setLoading(true)
+      try {
+        const response = await axios.post("http://localhost:3000/api/auth/login",{
           username : form.username.trim(),
           password : form.password.trim()
         })
-          setError(null)
-          setSuccess(response.data.message)
-          
-          setTimeout(()=>{     
-            navigate("/")
-          },2000)
-    
-        } 
-        catch (error) {
-          setSuccess(null)
-          setError(error.response.data.message)
-        }
-        setLoading(false)
-    
-        setTimeout(()=>{     
-          setSuccess(null)
-          setError(null)
-        },2000)
+
+        console.log(response.data);
+        
+
+        dispatch({type : "LOGIN", payload : response.data.userInfo})          
+
+        setError(null)
+        setSuccess(response.data.message)
+      } 
+      catch (error) {
+        setSuccess(null)
+        setError(error.response.data.message)
       }
-      submitForm()
+      setLoading(false)
+  
+      setTimeout(()=>{     
+        setSuccess(null)
+        setError(null)
+      },2000)
     }
   return (
     <div className='pt-20'>
@@ -59,7 +69,7 @@ function Login() {
             
             {/* PASSWORD */}
             <div className='flex flex-col gap-2'>
-                <label htmlFor="pasword" className='font-bold'>Password</label>
+                <label htmlFor="password" className='font-bold'>Password</label>
                 <input type="password" id='password' placeholder='Password...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]'value={form.password} onChange={(e)=>{setForm(prevForm => ({...prevForm,password : e.target.value}))}}/>
             </div>
             <p>Do not have an account? <Link to={"/auth/register"}  className="text-cyan-300 font-bold">Register</Link></p>
