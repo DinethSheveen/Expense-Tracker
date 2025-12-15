@@ -17,13 +17,13 @@ function App() {
       <Routes>
         <Route path="/auth/register" element={<Register/>}/>
         <Route path="/auth/login" element={<Login/>}/>
-        <Route element={<ProtectedRoutes/>}>
-          <Route path="/" element={<HomePage/>}/>
-          <Route path="/dashboard" element={<Dashboard/>}/>
-          <Route path="/all-transactions" element={<AllTransactions/>}/>
-          <Route path="/income" element={<Income/>}/>
-          <Route path="/expense" element={<Expense/>}/>
-        </Route>
+        {/* <Route element={<ProtectedRoutes/>}> */}
+        <Route path="/" element={<HomePage/>}/>
+        <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/all-transactions" element={<AllTransactions/>}/>
+        <Route path="/income" element={<Income/>}/>
+        <Route path="/expense" element={<Expense/>}/>
+        {/* </Route> */}
       </Routes>
     </div>
   )
