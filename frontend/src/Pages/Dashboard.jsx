@@ -4,10 +4,13 @@ import { TransactionContext } from "../Hooks/TransactionContextProvider"
 import MinMaxFinances from "../Components/MinMaxFinances"
 import TotalFinances from "../Components/TotalFinances"
 import RecentHistory from "../Components/RecentHistory"
+import { AuthContext } from "../Hooks/AuthContextProvider"
+import { Navigate } from "react-router-dom"
 
 function Dashboard() {
 
   const {allIncome,getAllIncome,allExpense,getAllExpense} = useContext(TransactionContext)
+  const {state} = useContext(AuthContext)
   
   // GETTING THE TOTAL INCOME
   const getTotalIncome = ()=>{
@@ -70,35 +73,36 @@ function Dashboard() {
   },[])
 
   return (
-    <div className='dashboard flex-1 justify-center rounded-[10px] pt-30 pb-10 px-4'>
-      {/* FLEX CONTAINER */}
-      <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:gap-4">
-        {/* LEFT - CHART */}
-        <Chart/>
+      state.isAuthenticated ? 
+      <div className='dashboard flex-1 justify-center rounded-[10px] pt-30 pb-10 px-4'>
+        {/* FLEX CONTAINER */}
+        <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:gap-4">
+          {/* LEFT - CHART */}
+          <Chart/>
 
-        {/* RIGHT - RECENT HISTORY */}
-        <RecentHistory allIncome={allIncome} allExpense={allExpense}/>
-      </div>
+          {/* RIGHT - RECENT HISTORY */}
+          <RecentHistory allIncome={allIncome} allExpense={allExpense}/>
+        </div>
 
-      {/* FLEX CONTAINER */}
-      <div className="flex flex-col justify-between items-start gap-4 mt-5 xs:flex-row">
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 flex-1 md:flex-2 w-full">
-          <TotalFinances getTotalIncome={getTotalIncome} border={"border-green-800"} text={"text-green-500"}/>
-          <TotalFinances getTotalIncome={getTotalExpense}  border={"border-red-500"} text={"text-red-500"}/>
+        {/* FLEX CONTAINER */}
+        <div className="flex flex-col justify-between items-start gap-4 mt-5 xs:flex-row">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 flex-1 md:flex-2 w-full">
+            <TotalFinances getTotalIncome={getTotalIncome} border={"border-green-800"} text={"text-green-500"}/>
+            <TotalFinances getTotalIncome={getTotalExpense}  border={"border-red-500"} text={"text-red-500"}/>
 
-          <div className="rounded-[5px] border-2 border-cyan-800 p-2 font-bold flex flex-col md:text-2xl text-cyan-500">
-            <p>Profit Margin</p>
-            <p>${getTotalIncome() - getTotalExpense()}</p>
+            <div className="rounded-[5px] border-2 border-cyan-800 p-2 font-bold flex flex-col md:text-2xl text-cyan-500">
+              <p>Profit Margin</p>
+              <p>${getTotalIncome() - getTotalExpense()}</p>
+            </div>
+          </div>
+
+          <div className="flex flex-1 flex-col items-center justify-between gap-8 h-full w-full">
+            <MinMaxFinances getMinMaxFinance={getMinMaxIncome} financeData={allIncome} title={"Income"}/>
+            <MinMaxFinances getMinMaxFinance={getMinMaxExpense} financeData={allExpense} title={"Expense"}/>
           </div>
         </div>
-
-        <div className="flex flex-1 flex-col items-center justify-between gap-8 h-full w-full">
-          <MinMaxFinances getMinMaxFinance={getMinMaxIncome} financeData={allIncome} title={"Income"}/>
-          <MinMaxFinances getMinMaxFinance={getMinMaxExpense} financeData={allExpense} title={"Expense"}/>
-        </div>
-      </div >
-
-    </div>
+      </div>
+      : <Navigate to={"/auth/login"}/>
   )
 }
 

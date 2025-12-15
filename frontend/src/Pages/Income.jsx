@@ -3,10 +3,13 @@ import { TransactionContext } from "../Hooks/TransactionContextProvider";
 import { CiCirclePlus } from "react-icons/ci";
 import { useEffect } from "react";
 import IncomeComponent from "../Components/IncomeComponent";
+import { AuthContext } from "../Hooks/AuthContextProvider";
+import { Navigate } from "react-router-dom";
 
 function Income() {
 
   const {addIncome,getAllIncome,allIncome,error,success,deleteSuccess} = useContext(TransactionContext)
+  const {state} = useContext(AuthContext)
 
   const [inputs, setInputs] = useState({
     title:"",
@@ -44,6 +47,7 @@ function Income() {
   },[success,deleteSuccess])
 
   return (
+    state.isAuthenticated?
     <div className='income flex-1 justify-center rounded-[10px] pt-20 px-2'>      
       <div className="my-4 text-2xl font-bold text-center p-2 bg-gray-800 rounded-[10px]">
         <p>Total Income : <span className="text-green-500">${totalIncome}</span></p>
@@ -103,6 +107,7 @@ function Income() {
       }
       {deleteSuccess && <div className="bg-red-300 text-red-800 font-bold border-2 border-red-700 p-2 rounded-[5px] my-3">{deleteSuccess}</div>}
     </div>
+    : <Navigate to={"/auth/login"}/>
   )
 }
 

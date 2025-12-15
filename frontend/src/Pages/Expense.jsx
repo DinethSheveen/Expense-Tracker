@@ -6,10 +6,13 @@ import { TbBrandYoutubeFilled } from "react-icons/tb";
 import { MdSavings } from "react-icons/md";
 import { BsBank } from "react-icons/bs";
 import ExpenseComponent from "../Components/ExpenseComponent";
+import { AuthContext } from "../Hooks/AuthContextProvider";
+import { Navigate } from "react-router-dom";
 
 function Expense() {
 
   const {addExpense,getAllExpense,allExpense,error,success,deleteSuccess} = useContext(TransactionContext)
+  const {state} = useContext(AuthContext)
 
   useEffect(()=>{
     getAllExpense()
@@ -44,6 +47,7 @@ function Expense() {
   const totalExpense = calcTotal()
 
   return (
+    state.isAuthenticated?
     <div className='flex-1 justify-center rounded-[10px] pt-20 px-2'>      
       <div className="my-4 text-2xl font-bold text-center p-2 bg-gray-800 rounded-[10px]">
         <p>Total Expense : <span className="text-red-500">${totalExpense}</span> </p>
@@ -102,8 +106,8 @@ function Expense() {
         </div>
       }
       {deleteSuccess && <div className="bg-red-300 text-red-800 font-bold border-2 border-red-700 p-2 rounded-[5px] my-3">{deleteSuccess}</div>}
-
     </div>
+    :<Navigate to={"/auth/login"}/>
   )
 }
 

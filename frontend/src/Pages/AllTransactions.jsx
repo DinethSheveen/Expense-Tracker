@@ -1,10 +1,13 @@
 import { useContext, useEffect, useMemo, useState } from "react"
 import { TransactionContext } from "../Hooks/TransactionContextProvider"
 import dayjs from "dayjs"
+import { AuthContext } from "../Hooks/AuthContextProvider"
+import { Navigate } from "react-router-dom"
 
 function AllTransactions() {
 
   const {allIncome,allExpense,getAllIncome,getAllExpense} = useContext(TransactionContext)
+  const {state} = useContext(AuthContext)
   
   const [sortBy, setSortBy] = useState("Select an option")
   const [filterBy, setFilterBy] = useState("All")
@@ -52,6 +55,7 @@ function AllTransactions() {
   },[])
 
   return (
+    state.isAuthenticated ?
     <div className='all-transactions pt-20'>
       {/* CONTROLS */}
       <div className="flex justify-center items-center flex-wrap gap-2 my-4">
@@ -114,8 +118,8 @@ function AllTransactions() {
             </div>
           )
       })}
-      
     </div>
+    :<Navigate to={"/auth/login"}/>
   )
 }
 
