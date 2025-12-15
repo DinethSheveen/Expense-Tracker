@@ -16,7 +16,7 @@ function Sidebar() {
     {icon:<RxDashboard/>, text:"Dashboard", endpoint:"/dashboard"},
     {icon:<FaWallet/>, text:"All-Transactions", endpoint:"/all-transactions"},
     {icon:<GrTransaction/>, text:"Income", endpoint:"/income"},
-    {icon:<GrTransaction/>, text:"Expense", endpoint:"/expense"}
+    {icon:<GrTransaction className="scale-x-[-1]"/>, text:"Expense", endpoint:"/expense"}
   ]
 
   const handleSidebar = ()=>{
@@ -28,7 +28,7 @@ function Sidebar() {
       <div className='navbar flex items-center justify-between flex-wrap fixed w-full py-6 px-4 bg-gray-900 md:py-2'>
       {/* PROFILE SECTION WITH IMAGE */}
       <div>
-        <Link to={"/"} className="font-bold">Expense Tracker</Link>
+        <Link to={"/"} className="font-bold text-2xl"><span className="text-orange-400">Coin Trail</span></Link>
       </div>
       
       {/* MENU LINKS */}

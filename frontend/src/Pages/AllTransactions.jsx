@@ -13,8 +13,6 @@ function AllTransactions() {
 
   allExpense.forEach((expense)=>{return (expense.type = "Expense")})
 
-  const allFinances = [...allIncome,...allExpense]
-
   // FORMATTING THE DATE
   const formattedDate = (date)=>{
     return dayjs(date).format("DD-MM-YYYY")
@@ -22,7 +20,7 @@ function AllTransactions() {
 
   // SORTING AND FILTERING
   const sortedAndFilteredFinances = useMemo(() => {
-  const data = [...allFinances]
+  const data = [...allIncome,...allExpense]
 
   // SORT
   switch (sortBy) {
@@ -46,7 +44,7 @@ function AllTransactions() {
   if (filterBy === "All") return data
 
   return data.filter(record => record.type === filterBy)
-}, [allFinances, sortBy, filterBy])
+}, [allIncome,allExpense, sortBy, filterBy])
 
   useEffect(()=>{
     getAllIncome()
