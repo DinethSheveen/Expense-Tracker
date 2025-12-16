@@ -35,10 +35,7 @@ function Login() {
         const response = await axios.post("http://localhost:3000/api/auth/login",{
           username : form.username.trim(),
           password : form.password.trim()
-        })
-
-        console.log(response.data);
-        
+        })        
 
         dispatch({type : "LOGIN", payload : response.data.userInfo})          
 
