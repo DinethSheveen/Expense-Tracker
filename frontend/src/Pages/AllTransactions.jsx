@@ -34,19 +34,20 @@ function AllTransactions() {
       data.sort((a, b) => a.amount - b.amount)
       break
     case "Latest - Oldest":
-      data.sort((a, b) => dayjs(b.date, "DD/MM/YYYY").valueOf() - dayjs(a.date, "DD/MM/YYYY").valueOf())
+      data.sort((a, b) => dayjs(a.date).valueOf() - dayjs(b.date).valueOf())
       break
     case "Oldest - Latest":
-      data.sort((a, b) => dayjs(a.date, "DD/MM/YYYY").valueOf() - dayjs(b.date, "DD/MM/YYYY").valueOf())
+      data.sort((a, b) => dayjs(b.date).valueOf() - dayjs(a.date).valueOf());
       break
     default:
       break
   }
 
   // FILTER
-  if (filterBy === "All") return data
+  if (filterBy === "All"){ return data}
 
   return data.filter(record => record.type === filterBy)
+  
 }, [allIncome,allExpense, sortBy, filterBy])
 
   useEffect(()=>{
