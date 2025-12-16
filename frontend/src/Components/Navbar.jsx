@@ -5,18 +5,35 @@ import { FaWallet } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import { RiMenuUnfold2Line } from "react-icons/ri";
+import { CgProfile } from "react-icons/cg";
+import { AiOutlineLogin } from "react-icons/ai";
 import { TbXboxX } from "react-icons/tb";
 import { useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../Hooks/AuthContextProvider";
+import { useEffect } from "react";
 
 function Sidebar() {
 
   const [sidebar, setSidebar] = useState(false)
+  const {state,dispatch} = useContext(AuthContext)
+  const [username,setUsername] = useState("")
+
+  useEffect(()=>{
+    const user = ()=>{
+      if(state.isAuthenticated){
+        setUsername(state.user.username)
+      }
+    }
+    user()
+  },[state.user,state.isAuthenticated])
 
   const menuLinks = [
     {icon:<RxDashboard/>, text:"Dashboard", endpoint:"/dashboard"},
     {icon:<FaWallet/>, text:"All-Transactions", endpoint:"/all-transactions"},
     {icon:<GrTransaction/>, text:"Income", endpoint:"/income"},
-    {icon:<GrTransaction className="scale-x-[-1]"/>, text:"Expense", endpoint:"/expense"}
+    {icon:<GrTransaction className="scale-x-[-1]"/>, text:"Expense", endpoint:"/expense"},
+    {icon:<CgProfile />, text:"Profile", endpoint:"/profile",className:"md:hidden"}
   ]
 
   const handleSidebar = ()=>{
@@ -25,33 +42,47 @@ function Sidebar() {
 
   return (
     <div className="relative">
-      <div className='navbar flex items-center justify-between flex-wrap fixed w-full py-6 px-4 bg-gray-900 md:py-2'>
-      {/* PROFILE SECTION WITH IMAGE */}
-      <div>
-        <Link to={"/"} className="font-bold text-2xl"><span className="text-orange-400">Coin Trail</span></Link>
-      </div>
-      
-      {/* MENU LINKS */}
-      <div className="hidden gap-4 px-4 md:flex">
-        {menuLinks.map((menuLink,index)=>{
-          return(
-            <NavLink key={index} to={menuLink.endpoint} className={({isActive})=>
-              `flex items-center gap-1 transition-all ${isActive?"text-gray-400 border-b-4 border-b-gray-600 pb-1 rounded-[5px] font-bold":"hover:text-gray-400 hover:border-b-4 hover:border-b-gray-600 hover:font-bold"}`}>
-              {menuLink.icon}
-              {menuLink.text}
-            </NavLink>
-          )
-        })}
-      </div>
+      <div className='navbar fixed w-full py-6 px-4 bg-gray-900 md:py-4'>
+        {state.isAuthenticated?
+        <div className="flex items-center justify-between flex-wrap">
+          {/* PROFILE SECTION WITH IMAGE */}
+          <div>
+            <Link to={"/"} className="font-bold text-2xl"><span className="text-orange-400">Coin Trail</span></Link>
+          </div>
+          
+          {/* MENU LINKS */}
+          <div className="hidden gap-4 px-4 md:flex">
+            {menuLinks.map((menuLink,index)=>{
+              return(
+                <NavLink key={index} to={menuLink.endpoint} className={({isActive})=>
+                  `flex items-center gap-1 transition-all ${menuLink.className && menuLink.className} ${isActive?"text-gray-400 border-b-4 border-b-gray-600 pb-1 rounded-[5px] font-bold":"hover:text-gray-400 hover:border-b-4 hover:border-b-gray-600 hover:font-bold"}`}>
+                  {menuLink.icon}
+                  {menuLink.text}
+                </NavLink>
+              )
+            })}
+          </div>
 
-      {/* PROFILE SECTION WITH IMAGE */}
-      <div className="hidden items-center gap-2 md:flex">
-        <img src={img} alt="" className="rounded-full w-15 h-15"/>
-        <p className="font-bold">Dineth</p>
-      </div>
-
-      {/* MENU ICON TO OPEN SIDEBAR */}
-      <RiMenuUnfold2Line className="flex text-white text-3xl md:hidden" onClick={handleSidebar}/>
+          {/* PROFILE SECTION WITH IMAGE */}
+          <div className="hidden items-center gap-2 md:flex">
+            <img src={img} alt="" className="rounded-full w-10 h-10"/>
+            <p className="font-bold">{username}</p>
+          </div>
+          
+          {/* MENU ICON TO OPEN SIDEBAR */}
+          <RiMenuUnfold2Line className="flex text-white text-3xl md:hidden" onClick={handleSidebar}/>
+        </div>
+        :
+        <div className="flex items-center justify-between gap-2 font-semibold cursor-pointer">
+          <div>
+            <Link to={"/"} className="font-bold text-2xl"><span className="text-orange-400">Coin Trail</span></Link>
+          </div>
+          <div className="flex gap-2">
+            <Link to={"/auth/login"}>SignIn</Link> 
+            <Link to={"/auth/register"}>SignUp</Link>
+          </div>
+        </div>
+        }
       </div>
       
       <div className="fixed right-0 top-0">
@@ -72,7 +103,7 @@ function Sidebar() {
 
           <div className="flex justify-center items-center gap-2 py-2 bg-gray-700 absolute bottom-0 w-full">
             <LiaSignOutAltSolid className="text-2xl"/>
-            <p className="font-bold">Sign Out</p>
+            <p className="font-bold" onClick={()=>{dispatch({type:"LOGOUT" }),setSidebar(false)}}>Sign Out</p>
           </div>
         </div>
       </div>
