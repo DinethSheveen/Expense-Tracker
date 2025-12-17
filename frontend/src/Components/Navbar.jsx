@@ -6,7 +6,7 @@ import { GrTransaction } from "react-icons/gr";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import { RiMenuUnfold2Line } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
-import { HiMiniBarsArrowDown } from "react-icons/hi2";
+import { IoIosArrowDropdown } from "react-icons/io";
 import { TbXboxX } from "react-icons/tb";
 import { useState } from "react";
 import { useContext } from "react";
@@ -72,17 +72,22 @@ function Sidebar() {
           </div>
 
           {/* PROFILE SECTION WITH IMAGE */}
-          <div className="hidden items-center justify-between gap-2 md:flex">
+          <div className="hidden items-center justify-between gap-2 z-10 md:flex">
             <img src={img} alt="" className="rounded-full w-10 h-10"/>
             <p className="font-bold">{username}</p>
-            <HiMiniBarsArrowDown className="text-2xl z-10" onClick={()=>{setOptionBar(prevOption => !prevOption)}}/>
+            {
+              optionBar?
+              <IoIosArrowDropdown className="text-2xl z-10 cursor-pointer transition-all duration-1000" onClick={()=>{setOptionBar(prevOption => !prevOption)}}/>
+              :
+              <IoIosArrowDropdown className="text-2xl z-10 cursor-pointer transition-all duration-1000 scale-y-[-1]" onClick={()=>{setOptionBar(prevOption => !prevOption)}}/>
+            }
           </div>
           
           {/* MENU ICON TO OPEN SIDEBAR */}
           <RiMenuUnfold2Line className="flex text-white text-3xl md:hidden" onClick={handleSidebar}/>
 
           {/* OPTION BAR */}
-          <div className={`absolute right-0 top-0 flex-col justify-center items-center font-bold transition-all duration-1000 bg-gray-900 hidden md:flex  ${optionBar?"top-18 opacity-100":"opacity-0"}`}>
+          <div className={`absolute right-0 top-0 flex-col justify-end items-center font-bold transition-all duration-1000 bg-gray-900 hidden md:flex  ${optionBar?"top-18 h-0 opacity-0":"h-40 opacity-100"}`}>
             <p className="px-10 py-3 hover:bg-gray-800 w-full cursor-pointer" onClick={()=>{navigate("/profile")}}>Profile</p>
             <p className="px-10 py-3 hover:bg-gray-800 cursor-pointer" onClick={handleSignout}>Sign Out</p>
           </div>
