@@ -23,12 +23,7 @@ function Register() {
     const submitForm = async()=>{
       setLoading(true)
       try {
-        const response = await axios.post("http://localhost:3000/api/auth/register",{
-        name : form.name.trim(),
-        username : form.username.trim(),
-        email : form.email.trim(),
-        password : form.password.trim()
-      })
+        const response = await axios.post("http://localhost:3000/api/auth/register",form,{withCredentials:true})
         setError(null)
         setSuccess(response.data.message)
         
@@ -58,25 +53,25 @@ function Register() {
             {/* NAME */}
             <div className='flex flex-col gap-2'>
                 <label htmlFor="name" className='font-bold'>Name</label>
-                <input type="text" id='name' placeholder='Name...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]' value={form.name}  onChange={(e)=>{setForm(prevForm => ({...prevForm,name : e.target.value}))}}/>
+                <input type="text" id='name' placeholder='Name...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]' value={form.name}  onChange={(e)=>{setForm(prevForm => ({...prevForm,name : e.target.value.trim()}))}}/>
             </div>
             
             {/* USERNAME */}
             <div className='flex flex-col gap-2'>
                 <label htmlFor="username" className='font-bold'>Username</label>
-                <input type="text" id='username' placeholder='Username...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]' value={form.username}  onChange={(e)=>{setForm(prevForm => ({...prevForm,username : e.target.value}))}}/>
+                <input type="text" id='username' placeholder='Username...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]' value={form.username}  onChange={(e)=>{setForm(prevForm => ({...prevForm,username : e.target.value.trim()}))}}/>
             </div>
             
             {/* EMAIL */}
             <div className='flex flex-col gap-2'>
                 <label htmlFor="email" className='font-bold'>Email</label>
-                <input type="text" id='email' placeholder='Email...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]' value={form.email}  onChange={(e)=>{setForm(prevForm => ({...prevForm,email : e.target.value}))}}/>
+                <input type="text" id='email' placeholder='Email...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]' value={form.email}  onChange={(e)=>{setForm(prevForm => ({...prevForm,email : e.target.value.trim()}))}}/>
             </div>
             
             {/* PASSWORD */}
             <div className='flex flex-col gap-2'>
                 <label htmlFor="pasword" className='font-bold'>Password</label>
-                <input type="password" id='password' placeholder='Password...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]' value={form.password}  onChange={(e)=>{setForm(prevForm => ({...prevForm,password : e.target.value}))}}/>
+                <input type="password" id='password' placeholder='Password...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]' value={form.password}  onChange={(e)=>{setForm(prevForm => ({...prevForm,password : e.target.value.trim()}))}}/>
             </div>
             <p>Already have an account? <Link to={"/auth/login"}  className="text-cyan-300 font-bold">Login</Link></p>
             <Button loading={loading} buttonText="Register"/>

@@ -32,10 +32,7 @@ function Login() {
   
       setLoading(true)
       try {
-        const response = await axios.post("http://localhost:3000/api/auth/login",{
-          username : form.username.trim(),
-          password : form.password.trim()
-        })        
+        const response = await axios.post("http://localhost:3000/api/auth/login",form,{withCredentials:true})        
 
         dispatch({type : "LOGIN", payload : response.data.userInfo})          
 
@@ -61,13 +58,13 @@ function Login() {
             {/* USERNAME */}
             <div className='flex flex-col gap-2'>
                 <label htmlFor="username" className='font-bold'>Username</label>
-                <input type="text" id='username' placeholder='Username...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]'value={form.username} onChange={(e)=>{setForm(prevForm => ({...prevForm,username : e.target.value}))}}/>
+                <input type="text" id='username' placeholder='Username...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]'value={form.username} onChange={(e)=>{setForm(prevForm => ({...prevForm,username : e.target.value.trim()}))}}/>
             </div>
             
             {/* PASSWORD */}
             <div className='flex flex-col gap-2'>
                 <label htmlFor="password" className='font-bold'>Password</label>
-                <input type="password" id='password' placeholder='Password...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]'value={form.password} onChange={(e)=>{setForm(prevForm => ({...prevForm,password : e.target.value}))}}/>
+                <input type="password" id='password' placeholder='Password...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]'value={form.password} onChange={(e)=>{setForm(prevForm => ({...prevForm,password : e.target.value.trim()}))}}/>
             </div>
             <p>Do not have an account? <Link to={"/auth/register"}  className="text-cyan-300 font-bold">Register</Link></p>
 
