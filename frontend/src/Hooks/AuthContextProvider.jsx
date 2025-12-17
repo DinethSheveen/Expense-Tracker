@@ -1,4 +1,5 @@
-import { useReducer } from "react"
+import axios from "axios"
+import { useEffect, useReducer } from "react"
 import { createContext } from "react"
 
 export const AuthContext = createContext()
@@ -22,6 +23,12 @@ const authReducer = (state,action) =>{
         user : null,
         isAuthenticated : false
       })
+    case "SET_USER":
+      return({
+        ...state,
+        user : action.payload,
+        isAuthenticated : !!action.payload
+      })
     default: 
       return state
   }
@@ -29,6 +36,20 @@ const authReducer = (state,action) =>{
 
 function AuthContextProvider({children}) {
   const [state,dispatch] = useReducer(authReducer,initialState)
+
+  useEffect(()=>{
+    const verifyUser = async()=>{
+      try {
+        const response = await axios.get("http://localhost:3000/api/auth/me",{withCredentials : true})
+        dispatch({type : "SET_USER",payload : response.data.userInfo})
+        return response.data.userInfo
+      } catch (error) {
+        console.log(error);
+        return null
+      } 
+    }
+    verifyUser()
+  },[])
 
   return (
     <AuthContext.Provider value={{state,dispatch}}>
