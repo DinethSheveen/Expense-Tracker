@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 const expenseSchema = mongoose.Schema({
     title:{
@@ -21,6 +21,11 @@ const expenseSchema = mongoose.Schema({
     date:{
         type : Date,
         required:true,
+    },
+    user : {
+        type  : Types.ObjectId,
+        ref : "user",
+        required : true
     }
 },{timestamps:true})
 

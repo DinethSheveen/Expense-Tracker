@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose, { Types } from "mongoose"
 
 const userSchema = mongoose.Schema({
     name : {
@@ -20,7 +20,15 @@ const userSchema = mongoose.Schema({
     password : {
         type : String,
         required : true
-    }
+    },
+    income : [{
+        type : Types.ObjectId,
+        ref : "income"
+    }],
+    expense : [{
+        type : Types.ObjectId,
+        ref : "expense"
+    }]
 },{timestamps:true}
 )
 
