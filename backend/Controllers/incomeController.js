@@ -1,10 +1,20 @@
 import { Types } from "mongoose"
 import { incomeModel } from "../Models/incomeModel.js"
 import  validator from "validator"
+import { userModel } from "../Models/userModel.js"
 
-export const retreiveIncome = async(_,res)=>{
+export const retreiveIncome = async(req,res)=>{
+
+    const {userId} = req.params
+
+    if(!Types.ObjectId.isValid(userId)){
+        return res.status(400).json({message : "Invalid user"})
+    }
+
     try {
-        const income = await incomeModel.find().sort({createdAt:-1})
+        const user = await userModel.findById(userId).populate("income").sort({createdAt:-1})
+
+        const income = user.income
 
         if(!income){
             return res.status(200).json({message:"Income list is empty. Please add the income details"})
@@ -17,7 +27,7 @@ export const retreiveIncome = async(_,res)=>{
     }
 }
 export const addIncome = async(req,res)=>{
-
+    const {userId} = req.params
     const {title,amount,category,description,date} = req.body
 
     if(!title || !amount || !category || !description || !date){
@@ -30,12 +40,18 @@ export const addIncome = async(req,res)=>{
         return res.status(400).json({message:"Amount should be a number"})
     }
 
+    if(!Types.ObjectId.isValid(userId)){
+        return res.status(400).json({message:"Invalid user id"})
+    }
+
     if(!validator.isDate(date)){
         return res.status(400).json({message:"Date format should be (YYYY-MM-DD)"})
     }
 
     try {
-        const income = await incomeModel.create({title,amount,category,description,date})
+        const income = await incomeModel.create({title,amount:parsedAmount,category,description,date,user:userId})
+
+        const user = await userModel.findByIdAndUpdate(userId,{$push:{income}},{new:true})
 
         res.status(201).json({message:"Income Added Successfully"})
         
@@ -43,31 +59,9 @@ export const addIncome = async(req,res)=>{
         res.status(500).json({message:error.message})
     }
 }
-export const updateIncome = async(req,res)=>{
-    const incomeId = req.params.id
-    const {title,amount,category,description,date} = req.body
 
-    if(!incomeId){
-        return res.status(400).json({message : "Missing income id"})
-    }
-
-    if(!Types.ObjectId.isValid(incomeId)){
-        return res.status(400).json({message : "Invalid income id"})
-    }
-
-    if(!title || !amount || !category || !description || !date){
-        return res.status(400).json({message : "Fill in all required fields"})
-    }
-
-    try {
-        const income = await incomeModel.findByIdAndUpdate({_id:incomeId},{title,amount,category,description,date})
-        res.status(200).json({message : "Income Updated Successfully"})
-    } catch (error) {
-        res.status(500).json({message:error.message})
-    }
-}
 export const deleteIncome = async(req,res)=>{
-    const incomeId = req.params.id
+    const {incomeId,userId} = req.params
 
     if(!incomeId){
         return res.status(400).json({message : "Missing income id"})
@@ -80,15 +74,26 @@ export const deleteIncome = async(req,res)=>{
     try {
         const income = await incomeModel.findByIdAndDelete(incomeId)
 
+        const user = await userModel.findByIdAndUpdate(userId,{$pull:{income:incomeId}})
+
         res.status(200).json({message : "Income Deleted Successfully"})
     } catch (error) {
         res.status(500).json({message:error.message})
     }
 }
 
-export const incomeByDate = async(_,res)=>{
+export const incomeByDate = async(req,res)=>{
+
+    const {userId} = req.params
+
+    if(!Types.ObjectId.isValid(userId)){
+        return res.status(400).json({message : "Invalid user id"})
+    }
+
     try {
-        const income = await incomeModel.find().sort({date:1}) 
+        const user = await userModel.findById(userId).populate("income").sort({date:1}) 
+
+        const income = user.income
 
         if(!income){
             return res.status(200).json({message:"Expense list is empty. Please add the expense details"})

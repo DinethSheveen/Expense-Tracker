@@ -1,10 +1,20 @@
 import { Types } from "mongoose"
 import { expenseModel } from "../Models/expenseModel.js"
 import validator from "validator"
+import { userModel } from "../Models/userModel.js"
 
-export const retreiveExpense = async(_,res)=>{
+export const retreiveExpense = async(req,res)=>{
+
+    const {userId} = req.params
+
+    if(!Types.ObjectId.isValid(userId)){
+        return res.status(400).json({message:"Invalid user id"})
+    }
+
     try {
-        const expense = await expenseModel.find().sort({createdAt:-1}) 
+        const user = await userModel.findById(userId).sort({createdAt:-1}).populate("expense")
+        
+        const expense = user.expense
 
         if(!expense){
             return res.status(200).json({message:"Expense list is empty. Please add the expense details"})
@@ -17,8 +27,13 @@ export const retreiveExpense = async(_,res)=>{
         }
 }
 export const addExpense = async(req,res)=>{
+    const {userId} = req.params
     const {title,amount,category,description,date} = req.body
     
+    if(!title || !amount || !category || !description || !date){
+        return res.status(400).json({message:"Please fill in all fields"})
+    }
+
     const parsedAmount = parseFloat(amount)
 
     if(isNaN(parsedAmount)){
@@ -29,12 +44,14 @@ export const addExpense = async(req,res)=>{
         return res.status(400).json({message:"Date format should be (YYYY-MM-DD)"})
     }
 
-    if(!title || !amount || !category || !description || !date){
-        return res.status(400).json({message:"Please fill in all fields"})
+    if(!Types.ObjectId.isValid(userId)){
+        return res.status(400).json({message:"Invalid user id"})
     }
 
     try {
-        const expense = await expenseModel.create({title,amount,category,description,date})
+        const expense = await expenseModel.create({title,amount:parsedAmount,category,description,date,user:userId})
+
+        const user = await userModel.findByIdAndUpdate(userId,{$push:{expense}},{new:true})
 
         res.status(201).json({message:"Expense Added Successfully"})
 
@@ -42,35 +59,9 @@ export const addExpense = async(req,res)=>{
         res.status(500).json({message:error.message})
     }
 }
-export const updateExpense = async(req,res)=>{
-    try {
-        const expenseId = req.params.id
-        const {title,amount,category,description,date} = req.body
-    
-        if(!expenseId){
-            return res.status(400).json({message : "Missing expense id"})
-        }
-    
-        if(!Types.ObjectId.isValid(expenseId)){
-            return res.status(400).json({message : "Invalid expense id"})
-        }
-    
-        if(!title || !amount || !category || !description || !date){
-            return res.status(400).json({message : "Fill in all required fields"})
-        }
-    
-        try {
-            const expense = await expenseModel.findByIdAndUpdate({_id:expenseId},{title,amount,category,description,date})
-            res.status(200).json({message : "Expense Updated Successfully"})
-        } catch (error) {
-            res.status(500).json({message:error.message})
-        }
-    } catch (error) {
-        res.status(500).json({message:error.message})
-    }
-}
+
 export const deleteExpense = async(req,res)=>{
-    const expenseId = req.params.id
+    const {expenseId,userId} = req.params
     
     if(!expenseId){
         return res.status(400).json({message : "Missing expense id"})
@@ -80,18 +71,33 @@ export const deleteExpense = async(req,res)=>{
         return res.status(400).json({message : "Invalid expense id"})
     }
 
+    if(!Types.ObjectId.isValid(userId)){
+        return res.status(400).json({message : "Invalid user id"})
+    }
+
     try {
         const expense = await expenseModel.findByIdAndDelete(expenseId)
+        const user = await userModel.findByIdAndUpdate(userId,{$pull:{expense:expenseId}})
 
         res.status(200).json({message : "Expense Deleted Successfully"})
     } catch (error) {
+        console.log(error);
         res.status(500).json({message:error.message})
     }
 }
 
-export const expenseByDate = async(_,res)=>{
+export const expenseByDate = async(req,res)=>{
+
+    const {userId} = req.params
+
+    if(!Types.ObjectId.isValid(userId)){
+        return res.status(400).json({message : "Invalid user id"})
+    }
+
     try {
-        const expense = await expenseModel.find().sort({date:1}) 
+        const user = await userModel.findById(userId).sort({date:1}).populate("expense") 
+
+        const expense = user.expense
 
         if(!expense){
             return res.status(200).json({message:"Expense list is empty. Please add the expense details"})
