@@ -1,5 +1,4 @@
 import { Link, NavLink, useNavigate } from "react-router-dom"
-import img from "../../public/CodeSprint08.png"
 import { RxDashboard } from "react-icons/rx";
 import { FaWallet } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
@@ -12,6 +11,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../Hooks/AuthContextProvider";
 import { useEffect } from "react";
+import user from "../../public/user.jpg"
 
 function Sidebar() {
 
@@ -54,6 +54,7 @@ function Sidebar() {
   const handleSignout = ()=>{
     dispatch({type:"LOGOUT" }),
     setSidebar(false)
+    navigate("auth/login")
   }
 
   return (
@@ -81,7 +82,8 @@ function Sidebar() {
 
           {/* PROFILE SECTION WITH IMAGE */}
           <div className="hidden items-center justify-between gap-2 z-10 md:flex">
-            <img src={img} alt="" className="rounded-full w-10 h-10"/>
+            <img src={state.user && state.user.image? `http://localhost:3000/images/${state.user.image}`:user}
+            alt="" className="rounded-full w-10 h-10"/>
             <p className="font-bold">{username}</p>
             {
               optionBar?
@@ -96,7 +98,7 @@ function Sidebar() {
 
           {/* OPTION BAR */}
           <div className={`absolute right-0 top-0 flex-col justify-end items-center font-bold transition-all duration-1000 bg-gray-900 hidden md:flex  ${optionBar?"top-18 h-25 opacity-100":"h-0 opacity-0"}`}>
-            <p className="px-10 py-3 hover:bg-gray-800 w-full cursor-pointer" onClick={()=>{navigate("/profile"),handleOptionBar()}}>Profile</p>
+            <p className="px-10 py-3 hover:bg-gray-800 w-full cursor-pointer" onClick={()=>{navigate(`/profile/${state.user && state.user._id}`),handleOptionBar()}}>Profile</p>
             <p className="px-10 py-3 hover:bg-gray-800 cursor-pointer" onClick={handleSignout}>Sign Out</p>
           </div>
         </div>
