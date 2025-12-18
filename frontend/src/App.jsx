@@ -8,6 +8,7 @@ import Navbar from "./Components/Navbar"
 import AllTransactions from "./Pages/AllTransactions"
 import Register from "./Pages/Register"
 import Login from "./Pages/Login"
+import Profile from "./Pages/Profile"
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/all-transactions/:userId" element={<AllTransactions/>}/>
         <Route path="/income/:userId" element={<Income/>}/>
         <Route path="/expense/:userId" element={<Expense/>}/>
+        <Route path="profile/:userId" element={<Profile/>}/>
       </Routes>
     </div>
   )
