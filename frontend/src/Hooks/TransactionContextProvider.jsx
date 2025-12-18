@@ -1,5 +1,7 @@
 import { createContext, useState } from "react"
 import axios from "axios"
+import { useContext } from "react"
+import { AuthContext } from "./AuthContextProvider"
 
 export const TransactionContext = createContext()
 
@@ -11,10 +13,12 @@ export default function TransactionContextProvider({children}) {
     const [allIncome,setAllIncome] = useState([])
     const [allExpense,setAllExpense] = useState([])
 
+    const {state} = useContext(AuthContext)
+
     // ADD INCOME
     const addIncome = async(income)=>{
         try {
-            const response = await axios.post("http://localhost:3000/api/transactions/income",income)
+            const response = await axios.post(`http://localhost:3000/api/transactions/income/${state.user && state.user._id}`,income)
             setError(null)
             setSuccess(response.data.message);            
         } catch (error) {
@@ -30,7 +34,7 @@ export default function TransactionContextProvider({children}) {
     // ADD EXPENSES
     const addExpense = async(expense)=>{
         try {
-            const response = await axios.post("http://localhost:3000/api/transactions/expense",expense)
+            const response = await axios.post(`http://localhost:3000/api/transactions/expense/${state.user && state.user._id}`,expense)
             setError(null)
             setSuccess(response.data.message);            
         } catch (error) {
@@ -45,24 +49,33 @@ export default function TransactionContextProvider({children}) {
 
     // RETRIEVE INCOME
     const getAllIncome = async()=>{
+
+        if(!state.user){
+            return null
+        }
+
         try {
-            const response = await axios.get("http://localhost:3000/api/transactions/income")
+            const response = await axios.get(`http://localhost:3000/api/transactions/income/${state.user._id}`)
             setAllIncome(response.data.message);
         } catch (error) {
-            console.log(error.response.data.message);
+            console.log(error);
         }
     }
 
     // RETRIEVE EXPENSES
     const getAllExpense = async()=>{
+
+        if(!state.user){
+            return null
+        }
+
         try {
-            const response = await axios.get("http://localhost:3000/api/transactions/expense")
+            const response = await axios.get(`http://localhost:3000/api/transactions/expense/${state.user._id}`)
             setAllExpense(response.data.message);
         } catch (error) {
-            console.log(error.response.data.message);
+            console.log(error);
         }
     }
-
     // DELETE INCOME
     const deleteIncome = async(id)=>{
         try {

@@ -29,18 +29,26 @@ function Sidebar() {
       }
     }
     user()
+    const closeOptionBar = ()=>{
+      setOptionBar(false)
+    }
+    closeOptionBar()
   },[state.user,state.isAuthenticated])
 
   const menuLinks = [
-    {icon:<RxDashboard/>, text:"Dashboard", endpoint:"/dashboard"},
-    {icon:<FaWallet/>, text:"All-Transactions", endpoint:"/all-transactions"},
-    {icon:<GrTransaction/>, text:"Income", endpoint:"/income"},
-    {icon:<GrTransaction className="scale-x-[-1]"/>, text:"Expense", endpoint:"/expense"},
-    {icon:<CgProfile />, text:"Profile", endpoint:"/profile",className:"md:hidden"}
+    {icon:<RxDashboard/>, text:"Dashboard", endpoint:`/dashboard/${state.user && state.user._id}`},
+    {icon:<FaWallet/>, text:"All-Transactions", endpoint:`/all-transactions/${state.user && state.user._id}`},
+    {icon:<GrTransaction/>, text:"Income", endpoint:`/income/${state.user && state.user._id}`},
+    {icon:<GrTransaction className="scale-x-[-1]"/>, text:"Expense", endpoint:`/expense/${state.user && state.user._id}`},
+    {icon:<CgProfile />, text:"Profile", endpoint:`/profile/${state.user && state.user._id}`,className:"md:hidden"}
   ]
 
   const handleSidebar = ()=>{
     setSidebar(prevState => !prevState)
+  }
+
+  const handleOptionBar = ()=>{
+    setOptionBar(prevOption => !prevOption)
   }
 
   const handleSignout = ()=>{
@@ -77,9 +85,9 @@ function Sidebar() {
             <p className="font-bold">{username}</p>
             {
               optionBar?
-              <IoIosArrowDropdown className="text-2xl z-10 cursor-pointer transition-all duration-1000" onClick={()=>{setOptionBar(prevOption => !prevOption)}}/>
+              <IoIosArrowDropdown className="text-2xl z-10 cursor-pointer transition-all duration-1000 scale-y-[-1]" onClick={handleOptionBar}/>
               :
-              <IoIosArrowDropdown className="text-2xl z-10 cursor-pointer transition-all duration-1000 scale-y-[-1]" onClick={()=>{setOptionBar(prevOption => !prevOption)}}/>
+              <IoIosArrowDropdown className="text-2xl z-10 cursor-pointer transition-all duration-1000" onClick={handleOptionBar}/>
             }
           </div>
           
@@ -87,8 +95,8 @@ function Sidebar() {
           <RiMenuUnfold2Line className="flex text-white text-3xl md:hidden" onClick={handleSidebar}/>
 
           {/* OPTION BAR */}
-          <div className={`absolute right-0 top-0 flex-col justify-end items-center font-bold transition-all duration-1000 bg-gray-900 hidden md:flex  ${optionBar?"top-18 h-0 opacity-0":"h-40 opacity-100"}`}>
-            <p className="px-10 py-3 hover:bg-gray-800 w-full cursor-pointer" onClick={()=>{navigate("/profile")}}>Profile</p>
+          <div className={`absolute right-0 top-0 flex-col justify-end items-center font-bold transition-all duration-1000 bg-gray-900 hidden md:flex  ${optionBar?"top-18 h-25 opacity-100":"h-0 opacity-0"}`}>
+            <p className="px-10 py-3 hover:bg-gray-800 w-full cursor-pointer" onClick={()=>{navigate("/profile"),handleOptionBar()}}>Profile</p>
             <p className="px-10 py-3 hover:bg-gray-800 cursor-pointer" onClick={handleSignout}>Sign Out</p>
           </div>
         </div>
