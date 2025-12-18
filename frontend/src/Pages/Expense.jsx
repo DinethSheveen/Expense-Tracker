@@ -16,7 +16,7 @@ function Expense() {
 
   useEffect(()=>{
     getAllExpense()
-  },[getAllExpense])
+  },[])
 
   const [inputs, setInputs] = useState({
     title:"",
