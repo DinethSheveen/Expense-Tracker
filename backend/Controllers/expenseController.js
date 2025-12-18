@@ -12,7 +12,11 @@ export const retreiveExpense = async(req,res)=>{
     }
 
     try {
-        const user = await userModel.findById(userId).sort({createdAt:-1}).populate("expense")
+        const user = await userModel.findById(userId).populate({path : "expense",options:{sort : {createdAt:-1}}})
+
+        if(!user){
+            return res.status(400).json({message : "User not found"})
+        }
         
         const expense = user.expense
 
