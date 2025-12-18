@@ -4,11 +4,14 @@ import { useEffect, useState } from "react"
 import dayjs from "dayjs"
 import axios from "axios"
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { useContext } from "react"
+import { AuthContext } from "../Hooks/AuthContextProvider"
 
 ChartJS.register(CategoryScale, LinearScale, LineElement,PointElement, Title, Legend, Tooltip)
 
 function Chart() {
 
+  const {state} = useContext(AuthContext)
   const dates = []
   const [incomes, setIncomes] = useState([])
   const [expenses, setExpenses] = useState([])
@@ -16,7 +19,7 @@ function Chart() {
   useEffect(()=>{
     const fetchIncome = async()=>{
       try {
-        const response = await axios.get("http://localhost:3000/api/transactions/income/by-date")
+        const response = await axios.get(`http://localhost:3000/api/transactions/income/by-date/${state.user && state.user._id}`)
         setIncomes(response.data.message)
       } catch (error) {
         console.log(error.message);
@@ -24,7 +27,7 @@ function Chart() {
     }
     const fetchExpense = async()=>{
       try {
-        const response = await axios.get("http://localhost:3000/api/transactions/expense/by-date")
+        const response = await axios.get(`http://localhost:3000/api/transactions/expense/by-date/${state.user && state.user._id}`)
         setExpenses(response.data.message)
       } catch (error) {
         console.log(error.message);
