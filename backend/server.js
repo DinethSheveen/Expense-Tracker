@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 3000
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({origin : "http://localhost:5173",credentials:true}))
+app.use("/images",express.static("public/images"))
 
 // ROUTING
 app.use("/api/auth",authRouter)
