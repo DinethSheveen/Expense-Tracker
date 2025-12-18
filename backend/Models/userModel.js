@@ -1,6 +1,9 @@
 import mongoose, { Types } from "mongoose"
 
 const userSchema = mongoose.Schema({
+    image : {
+        type : String
+    },
     name : {
         type : String,
         required : true
