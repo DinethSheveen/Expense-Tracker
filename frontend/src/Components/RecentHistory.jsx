@@ -25,6 +25,7 @@ function RecentHistory({allIncome,allExpense}) {
         <p className="text-center mb-3 font-bold">Recent History</p>
         <div className="flex flex-col gap-5">
             {
+                recentFinances.length!==0?
                 recentFinances.map((finance)=>{
                     return(
                         <div key={finance._id} className={`flex justify-between gap-3 items-center bg-gray-700 py-4 px-2 font-bold rounded-[5px] ${finance.type === "Income"? "text-green-400" : "text-red-400"}`}>
@@ -33,6 +34,8 @@ function RecentHistory({allIncome,allExpense}) {
                         </div>
                     )
                 })
+                :
+                <p className="text-center">No transactions recorded yet...</p>
             }
         </div>
     </div>
