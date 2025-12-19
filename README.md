@@ -10,7 +10,9 @@ A modern and responsive **Expense Tracker** web application built with **MERN ST
 ✔️ View a list of all expenses and income   <br>
 ✔️ Edit or delete existing expenses and income   <br>
 ✔️ Filter or sort expenses by date or category    <br>
+✔️ Visual charts to represent income and expenses trends <br>
 ✔️ Responsive UI for both desktop and mobile   <br>
+✔️ Authentication & Authorization using Context API + useReducer <br>
 ✔️ Database storing and fetching  
 
 ---
@@ -28,10 +30,11 @@ Expense-Tracker/ <br>
 
 | Layer | Technology |
 |-------|------------|
-| Frontend | React, JavaScript, Vite |
-| Backend  | Node.js, Express |
+| Frontend | React, JavaScript, Vite, Context API + useReducer  |
+| Backend  | Node.js, Express, Multer (for image uploads) |
 | Styling  | TailwindsCSS |
 | Storage  | MongoDB |
+| Visualization | Chart.js (for displaying income and expenses) |
 
 ---
 
@@ -115,4 +118,6 @@ npm run dev
 - View your logged expenses and income in a table or list.
 - Delete expense or income entries to manage your data.
 - Use filters to view expenses and income by date or amount 
+- View your financial trends using the charts for a quick visual overview of income vs. expenses.
+- Authentication ensures that users can only access their own data securely.
 
