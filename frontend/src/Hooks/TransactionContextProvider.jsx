@@ -79,7 +79,7 @@ export default function TransactionContextProvider({children}) {
     // DELETE INCOME
     const deleteIncome = async(id)=>{
         try {
-            const response = await axios.delete(`http://localhost:3000/api/transactions/income/${id}`)
+            const response = await axios.delete(`http://localhost:3000/api/transactions/income/${id}/${state.user && state.user._id}`)
             setDeleteSuccess(response.data.message)
             setTimeout(()=>{
                 setDeleteSuccess(null)
@@ -92,7 +92,7 @@ export default function TransactionContextProvider({children}) {
     // DELETE EXPENSE
     const deleteExpense = async(id)=>{
         try {
-            const response = await axios.delete(`http://localhost:3000/api/transactions/expense/${id}`)
+            const response = await axios.delete(`http://localhost:3000/api/transactions/expense/${id}/${state.user && state.user._id}`)
             setDeleteSuccess(response.data.message)
             setTimeout(()=>{
                 setDeleteSuccess(null)

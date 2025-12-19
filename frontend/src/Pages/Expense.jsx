@@ -2,9 +2,6 @@ import { useContext, useState } from "react"
 import { TransactionContext } from "../Hooks/TransactionContextProvider";
 import { CiCirclePlus } from "react-icons/ci";
 import { useEffect } from "react";
-import { TbBrandYoutubeFilled } from "react-icons/tb";
-import { MdSavings } from "react-icons/md";
-import { BsBank } from "react-icons/bs";
 import ExpenseComponent from "../Components/ExpenseComponent";
 import { AuthContext } from "../Hooks/AuthContextProvider";
 import { Navigate } from "react-router-dom";
@@ -16,7 +13,7 @@ function Expense() {
 
   useEffect(()=>{
     getAllExpense()
-  },[])
+  },[success,deleteSuccess])
 
   const [inputs, setInputs] = useState({
     title:"",
@@ -81,7 +78,7 @@ function Expense() {
           </button>
         </form>
 
-        <div className="flex-1 h-130 overflow-x-none overflow-y-scroll scrollbar-hide">
+        <div className="flex-1 h-110 overflow-x-none overflow-y-scroll scrollbar-hide">
           <div className="flex flex-col gap-4">
             {allExpense && allExpense.map((expense)=>{
               return(
