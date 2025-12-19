@@ -15,6 +15,6 @@ const storage = multer.diskStorage({
 const upload = multer({storage})
 const userRouter = Router()
 
-userRouter.post("/profile/:userId",upload.single('image'),uploadPicture)
+userRouter.put("/profile/:userId",upload.single('image'),uploadPicture)
 
 export default userRouter
