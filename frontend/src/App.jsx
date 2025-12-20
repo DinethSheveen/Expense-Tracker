@@ -9,20 +9,22 @@ import AllTransactions from "./Pages/AllTransactions"
 import Register from "./Pages/Register"
 import Login from "./Pages/Login"
 import Profile from "./Pages/Profile"
+import { useState } from "react"
 
 function App() {
+  const [loading, setLoading] = useState(false)
   return (
     <div className="bg-black text-white">
       <Navbar/>
       <Routes>
-        <Route path="/auth/register" element={<Register/>}/>
-        <Route path="/auth/login" element={<Login/>}/>
+        <Route path="/auth/register" element={<Register loading={loading} setLoading={setLoading}/>}/>
+        <Route path="/auth/login" element={<Login loading={loading} setLoading={setLoading}/>}/>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/dashboard/:userId" element={<Dashboard/>}/>
         <Route path="/all-transactions/:userId" element={<AllTransactions/>}/>
         <Route path="/income/:userId" element={<Income/>}/>
         <Route path="/expense/:userId" element={<Expense/>}/>
-        <Route path="profile/:userId" element={<Profile/>}/>
+        <Route path="profile/:userId" element={<Profile loading={loading} setLoading={setLoading}/>}/>
       </Routes>
     </div>
   )
