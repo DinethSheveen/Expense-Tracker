@@ -7,7 +7,7 @@ import { AuthContext } from "../Hooks/AuthContextProvider";
 import { useEffect } from "react";
 
 
-function Login() {
+function Login({loading,setLoading}) {
 
   const {state,dispatch} = useContext(AuthContext)
   const navigate = useNavigate()
@@ -20,7 +20,6 @@ function Login() {
 
   const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
-    const [loading, setLoading] = useState(false)
     const [form, setForm] = useState({
       username : "",
       password : ""
@@ -69,8 +68,8 @@ function Login() {
             <p>Do not have an account? <Link to={"/auth/register"}  className="text-cyan-300 font-bold">Register</Link></p>
 
             <Button loading={loading} buttonText="Login"/>
-            {error && error? <div className='bg-red-200 border-red-600 border-2 text-red-600 font-bold py-2 px-4 rounded-[5px]'>{error}!</div>:""}
-            {success && success? <div className='bg-green-200 border-green-600 border-2 text-green-600 font-bold py-2 px-4 rounded-[5px]'>{success}!. Redirecting...</div>:""}
+            {error && error? <div className='p-3 border-l-4 border-red-500 bg-red-200 text-red-700 font-semibold rounded-lg shadow-sm'>{error}!</div>:""}
+            {success && success? <div className='p-3 border-l-4 border-green-500 bg-green-200 text-green-700 font-semibold rounded-lg shadow-sm'>{success}!. Redirecting...</div>:""}
         </form>
       </div>
     </div>

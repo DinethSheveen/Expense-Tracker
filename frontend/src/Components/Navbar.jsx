@@ -83,7 +83,7 @@ function Sidebar() {
           {/* PROFILE SECTION WITH IMAGE */}
           <div className="hidden items-center justify-between gap-2 z-10 md:flex">
             <img src={state.user && state.user.image? `http://localhost:3000/images/${state.user.image}`:user}
-            alt="" className="rounded-full w-10 h-10"/>
+            alt="profile picture" className="rounded-full w-10 h-10 object-cover"/>
             <p className="font-bold">{username}</p>
             {
               optionBar?
@@ -115,9 +115,11 @@ function Sidebar() {
         }
       </div>
       
+      {/* SIDEBAR */}
       <div className="fixed right-0 top-0">
         <div className={`sidebar min-h-screen absolute transition-all duration-1000 top-0 right-0 bg-gray-800 overflow-hidden md:hidden ${sidebar? "w-64 opacity-100" : "w-0 opacity-0"}`}>
           <TbXboxX className="text-3xl absolute right-3 top-5" onClick={handleSidebar}/>
+          
           {/* LINKS */}
           <div className="flex flex-col items-center w-full gap-5 absolute top-50">
             {menuLinks.map((menuLink,index)=>{
