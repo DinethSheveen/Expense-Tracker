@@ -45,8 +45,7 @@ function AuthContextProvider({children}) {
         const response = await axios.get("http://localhost:3000/api/auth/me",{withCredentials : true})
         dispatch({type : "SET_USER",payload : response.data.userInfo})
         return response.data.userInfo
-      } catch (error) {
-        console.log(error);
+      } catch {
         navigate("/auth/login")
         return null
       } 
