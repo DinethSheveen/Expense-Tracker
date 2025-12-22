@@ -1,16 +1,11 @@
 import { userModel } from "../Models/userModel.js"
-import { Types } from "mongoose"
 import bcrypt from "bcryptjs"
 import validator from "validator"
 
 export const uploadPicture = async(req, res)=> {
-    const {userId} = req.params
-  
-    if(!Types.ObjectId.isValid(userId)){
-        return res.status(400).json({message : "Invalid user id"})
-    }
 
     try {
+        const userId = req.validatedUser
         const user = await userModel.findByIdAndUpdate(userId,{image:req.file.filename})
 
         if(!user){
@@ -25,17 +20,15 @@ export const uploadPicture = async(req, res)=> {
 
 export const changePassword = async(req,res)=>{
     const {currentPassword,newPassword,confirmPassword} = req.body
-    const {userId} = req.params
-    
-    if(!Types.ObjectId.isValid(userId)){
-        return res.status(400).json({message : "Invalid user id"})
-    }
 
     if(!currentPassword || !newPassword || !confirmPassword){
         return res.status(400).json({message : "Fill in all fields to proceed changing the password"})
     }
 
     try {
+
+        const userId = req.validatedUser
+
         const user = await userModel.findById(userId)
         
         if(!user){
@@ -63,5 +56,45 @@ export const changePassword = async(req,res)=>{
         res.status(200).json({message : "Password Changed Successfully"})
     } catch (error) {
         res.status(500).json({message : error.message})
+    }
+}
+
+export const getProfileInfo = async(req,res)=>{
+    try {
+        const userId = req.validatedUser
+        const user = await userModel.findById(userId)
+
+        if(!user){
+            return res.status(404).json({message : "No user with this id"})
+        }
+
+        const {password,income,expense,...rest} = user._doc
+
+        res.status(200).json({userInfo:rest})
+
+    } catch (error) {
+        res.status(500).json({message : "Internal Server Error"})
+    }
+}
+
+
+export const updateProfileInfo = async(req,res)=>{
+    const {name,username,email} = req.body
+
+    if(!name || !username || !email){
+        return res.status(400).json({message : "Fill in all fields to proceed with changing the info"})
+    }
+
+    try {
+        const userId = req.validatedUser
+        const user = await userModel.findByIdAndUpdate(userId,{name,username,email})
+
+        if(!user){
+            return res.status(404).json({message : "No user with this id"})
+        }
+
+        res.status(200).json({message : "Updated Profile Successfully... Refresh"})
+    } catch (error) {
+        res.status(500).json({message : "Internal Server Error"})
     }
 }
