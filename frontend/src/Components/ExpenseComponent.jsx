@@ -23,7 +23,7 @@ function ExpenseComponent({expense}) {
 return (
     <div className="flex justify-between items-center bg-gray-900 p-2 rounded-[5px] border-2 border-gray-700 font-bold hover:border-cyan-500 md:p-4">
         {/* ICON */}
-        <div className="border-2 border-gray-500 p-2 rounded-[10px] text-2xl">
+        <div className="border-2 border-gray-500 p-2 rounded-[10px] text-2xl 2xl:text-5xl">
             {
                 expense.category==="Electricity Bill"?<MdElectricBolt/>:
                 expense.category==="Salary"?<PiCurrencyDollarSimpleFill/>:
@@ -39,21 +39,21 @@ return (
         <p>{expense.category}</p>
         <div className="flex flex-col justify-between items-center gap-4 sm:flex-row">
             <div className="flex items-center gap-1">
-                <CiDollar className="text-2xl"/>
+                <CiDollar className="text-2xl 2xl:text-5xl"/>
                 {expense.amount}
             </div>
             <div className="flex items-center gap-1">
-                <FaCalendarDay className="text-[18px]"/>
+                <FaCalendarDay className="text-[18px] 2xl:text-[25px]"/>
                 {formattedDate}
             </div>
             <div className="flex items-center gap-1">
-                <AiFillMessage className="text-[20px]"/>
+                <AiFillMessage className="text-[20px] 2xl:text-[30px]"/>
                 {expense.description}
             </div>
         </div>
         </div>
 
-        <div className="rounded-full bg-gray-800 text-red-700 text-2xl p-2 cursor-pointer hover:bg-gray-700 hover:text-red-600 active:bg-gray-600 active:text-red-500">
+        <div className="rounded-full bg-gray-800 text-red-700 text-2xl p-2 cursor-pointer hover:bg-gray-700 hover:text-red-600 active:bg-gray-600 active:text-red-500 2xl:text-5xl">
             <RiDeleteBin5Fill onClick={()=>{deleteExpense(expense._id)}}/>
         </div>
     </div>
