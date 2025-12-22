@@ -10,12 +10,12 @@ function HomePage() {
     <div className='homepage flex flex-col items-center justify-between gap-2 pt-25 min-h-screen px-4 md:flex-row '>
       {/* HEADER MSG */}
       <div className="flex flex-col items-center justify-center gap-2 md:w-[50%]">
-        <p className="text-4xl text-center font-bold md:max-w-100 md:text-5xl">Manage Your Finances Easily with <span className="text-orange-500">CoinTrail</span></p>
-        <p className="text-center font-bold max-w-100">Managing money becomes easier when you know exactly where it goes. This app empowers users to track income and expenses and make informed financial decisions.</p>
+        <p className="text-4xl text-center font-bold md:max-w-100 md:text-5xl 2xl:text-8xl 2xl:max-w-200">Manage Your Finances Easily with <span className="text-orange-500">CoinTrail</span></p>
+        <p className="text-center font-bold max-w-100 2xl:text-4xl 2xl:max-w-200">Managing money becomes easier when you know exactly where it goes. This app empowers users to track income and expenses and make informed financial decisions.</p>
       </div>
       {/* IMAGE BANNER */}
       <div>
-        <img src={banner} alt="Home page banner" className="h-[50vh] md:h-100 md:w-100"/>
+        <img src={banner} alt="Home page banner" className="h-[50vh] md:h-100 md:w-100 2xl:h-250 2xl:w-250"/>
       </div>
     </div>
     :

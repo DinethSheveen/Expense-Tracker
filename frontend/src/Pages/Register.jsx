@@ -45,37 +45,37 @@ function Register({loading,setLoading}) {
   }
 
   return (
-    <div className='pt-18'>
+    <div className='pt-18 2xl:pt-38'>
       <div className="flex items-center justify-center min-h-[88vh]">
-        <form onSubmit={handleSubmit} className='form flex flex-col gap-3 min-w-[90%] justify-around shadow-lg rounded-[10px] bg-[#1a1a1a] py-4 px-2 md:min-w-[60%]'>
-        <p className="text-3xl font-bold text-cyan-300">Register</p>
+        <form onSubmit={handleSubmit} className='form flex flex-col gap-3 min-w-[90%] justify-around shadow-lg rounded-[10px] bg-[#1a1a1a] py-4 px-2 md:min-w-[60%] 2xl:gap-10'>
+        <p className="text-3xl font-bold text-cyan-300 2xl:text-6xl">Register</p>
             {/* NAME */}
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 2xl:text-4xl 2xl:gap-6'>
                 <label htmlFor="name" className='font-bold'>Name</label>
-                <input type="text" id='name' placeholder='Name...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]' value={form.name}  onChange={(e)=>{setForm(prevForm => ({...prevForm,name : e.target.value.trim()}))}}/>
+                <input type="text" id='name' placeholder='Name...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px] 2xl:py-4' value={form.name}  onChange={(e)=>{setForm(prevForm => ({...prevForm,name : e.target.value.trim()}))}}/>
             </div>
             
             {/* USERNAME */}
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 2xl:text-4xl 2xl:gap-6'>
                 <label htmlFor="username" className='font-bold'>Username</label>
-                <input type="text" id='username' placeholder='Username...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]' value={form.username}  onChange={(e)=>{setForm(prevForm => ({...prevForm,username : e.target.value.trim()}))}}/>
+                <input type="text" id='username' placeholder='Username...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px] 2xl:py-4' value={form.username}  onChange={(e)=>{setForm(prevForm => ({...prevForm,username : e.target.value.trim()}))}}/>
             </div>
             
             {/* EMAIL */}
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 2xl:text-4xl 2xl:gap-6'>
                 <label htmlFor="email" className='font-bold'>Email</label>
-                <input type="text" id='email' placeholder='Email...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]' value={form.email}  onChange={(e)=>{setForm(prevForm => ({...prevForm,email : e.target.value.trim()}))}}/>
+                <input type="text" id='email' placeholder='Email...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px] 2xl:py-4' value={form.email}  onChange={(e)=>{setForm(prevForm => ({...prevForm,email : e.target.value.trim()}))}}/>
             </div>
             
             {/* PASSWORD */}
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 2xl:text-4xl 2xl:gap-6'>
                 <label htmlFor="pasword" className='font-bold'>Password</label>
-                <input type="password" id='password' placeholder='Password...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px]' value={form.password}  onChange={(e)=>{setForm(prevForm => ({...prevForm,password : e.target.value.trim()}))}}/>
+                <input type="password" id='password' placeholder='Password...' className='text-white bg-[#2a2a2a] outline-none focus:ring-2 focus:ring-cyan-300 p-2 rounded-[5px] 2xl:py-4' value={form.password}  onChange={(e)=>{setForm(prevForm => ({...prevForm,password : e.target.value.trim()}))}}/>
             </div>
-            <p>Already have an account? <Link to={"/auth/login"}  className="text-cyan-300 font-bold">Login</Link></p>
+            <p className="2xl:text-4xl">Already have an account? <Link to={"/auth/login"}  className="text-cyan-300 font-bold">Login</Link></p>
             <Button loading={loading} buttonText="Register"/>
-          {error && error? <div className='p-3 border-l-4 border-red-500 bg-red-200 text-red-700 font-semibold rounded-lg shadow-sm'>{error}!</div>:""}
-          {success && success? <div className='p-3 border-l-4 border-green-500 bg-green-200 text-green-700 font-semibold rounded-lg shadow-sm'>{success}!. Redirecting...</div>:""}
+          {error && error? <div className='p-3 border-l-4 border-red-500 bg-red-200 text-red-700 font-semibold rounded-lg shadow-sm 2xl:text-4xl 2xl:py-6 border-l-8'>{error}!</div>:""}
+          {success && success? <div className='p-3 border-l-4 border-green-500 bg-green-200 text-green-700 font-semibold rounded-lg shadow-sm 2xl:text-4xl 2xl:py-6'>{success}!. Redirecting...</div>:""}
         </form>
       </div>
     </div>

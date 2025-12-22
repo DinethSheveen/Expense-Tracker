@@ -59,16 +59,16 @@ function Sidebar() {
 
   return (
     <div className="relative">
-      <div className='navbar fixed w-full py-6 px-4 bg-gray-900 md:py-4'>
+      <div className='navbar fixed w-full py-6 px-4 bg-gray-900 md:py-4 2xl:text-4xl 2xl:py-8'>
         {state.isAuthenticated?
         <div className="flex items-center justify-between flex-wrap">
           {/* PROFILE SECTION WITH IMAGE */}
           <div>
-            <Link to={"/"} className="font-bold text-2xl"><span className="text-orange-400">Coin Trail</span></Link>
+            <Link to={"/"} className="font-bold text-2xl 2xl:text-5xl"><span className="text-orange-400">Coin Trail</span></Link>
           </div>
           
           {/* MENU LINKS */}
-          <div className="hidden gap-4 px-4 md:flex">
+          <div className="hidden gap-4 px-4 md:flex 2xl:gap-8 ">
             {menuLinks.map((menuLink,index)=>{
               return(
                 <NavLink key={index} to={menuLink.endpoint} className={({isActive})=>
@@ -83,13 +83,13 @@ function Sidebar() {
           {/* PROFILE SECTION WITH IMAGE */}
           <div className="hidden items-center justify-between gap-2 z-10 md:flex">
             <img src={state.user && state.user.image? `http://localhost:3000/images/${state.user.image}`:user}
-            alt="profile picture" className="rounded-full w-10 h-10 object-cover"/>
+            alt="profile picture" className="rounded-full w-10 h-10 object-cover 2xl:h-20 2xl:w-20"/>
             <p className="font-bold">{username}</p>
             {
               optionBar?
-              <IoIosArrowDropdown className="text-2xl z-10 cursor-pointer transition-all duration-1000 scale-y-[-1]" onClick={handleOptionBar}/>
+              <IoIosArrowDropdown className="text-2xl z-10 cursor-pointer transition-all duration-1000 scale-y-[-1] 2xl:text-6xl" onClick={handleOptionBar}/>
               :
-              <IoIosArrowDropdown className="text-2xl z-10 cursor-pointer transition-all duration-1000" onClick={handleOptionBar}/>
+              <IoIosArrowDropdown className="text-2xl z-10 cursor-pointer transition-all duration-1000 2xl:text-6xl" onClick={handleOptionBar}/>
             }
           </div>
           
@@ -97,17 +97,17 @@ function Sidebar() {
           <RiMenuUnfold2Line className="flex text-white text-3xl md:hidden" onClick={handleSidebar}/>
 
           {/* OPTION BAR */}
-          <div className={`absolute right-0 top-0 flex-col justify-end items-center font-bold transition-all duration-1000 bg-gray-900 hidden md:flex  ${optionBar?"top-18 h-25 opacity-100":"h-0 opacity-0"}`}>
-            <p className="px-10 py-3 hover:bg-gray-800 w-full cursor-pointer" onClick={()=>{navigate(`/profile/${state.user && state.user._id}`),handleOptionBar()}}>Profile</p>
-            <p className="px-10 py-3 hover:bg-gray-800 cursor-pointer" onClick={handleSignout}>Sign Out</p>
+          <div className={`absolute right-0 top-0 flex-col justify-end items-center font-bold transition-all duration-1000 bg-gray-900 hidden md:flex  ${optionBar?"top-18 h-25 opacity-100 2xl:h-75":"h-0 opacity-0"}`}>
+            <p className="px-10 py-3 hover:bg-gray-800 w-full text-center cursor-pointer 2xl:py-10 2xl:px-20" onClick={()=>{navigate(`/profile/${state.user && state.user._id}`),handleOptionBar()}}>Profile</p>
+            <p className="px-10 py-3 hover:bg-gray-800 text-center cursor-pointer 2xl:py-10 2xl:px-20" onClick={handleSignout}>Sign Out</p>
           </div>
         </div>
         :
         <div className="flex items-center justify-between gap-2 font-semibold cursor-pointer">
           <div>
-            <Link to={"/"} className="font-bold text-2xl"><span className="text-orange-400">Coin Trail</span></Link>
+            <Link to={"/"} className="font-bold text-2xl 2xl:text-5xl"><span className="text-orange-400">Coin Trail</span></Link>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 2xl:gap-4">
             <Link to={"/auth/login"}>SignIn</Link> 
             <Link to={"/auth/register"}>SignUp</Link>
           </div>

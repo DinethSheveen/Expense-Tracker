@@ -128,15 +128,15 @@ function Profile({loading,setLoading}) {
             {/* USER INFORMATION */}
             <form onSubmit={updateProfile} className="flex flex-col gap-4 w-[90%] p-5 bg-gray-700 rounded-[10px] 2xl:gap-8">
                 <p className="flex flex-wrap items-center gap-2 text-2xl font-bold 2xl:text-5xl">User <span className="flex items-center gap-1 2xl:gap-3">Information <FaUserCircle/></span></p>
-                <div className="flex flex-wrap items-center justify-between bg-gray-600 py-1 px-2 font-bold rounded-[5px] 2xl:text-4xl 2xl:px-5 2xl:py-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 bg-gray-600 py-1 px-2 font-bold rounded-[5px] 2xl:text-4xl 2xl:px-5 2xl:py-3">
                     <p>Name :</p>
                     <input type="text" className="flex-1 rounded-[5px] outline-none focus:ring-2 focus:ring-cyan-300 border border-gray-500 text-right" value={profileForm.name} onChange={(e)=>{setProfileForm(prevInfo=>({...prevInfo,name:e.target.value.trim()}))}}/>
                 </div>
-                <div className="flex flex-wrap items-center justify-between bg-gray-600 py-1 px-2 font-bold rounded-[5px] 2xl:text-4xl 2xl:px-5 2xl:py-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 bg-gray-600 py-1 px-2 font-bold rounded-[5px] 2xl:text-4xl 2xl:px-5 2xl:py-3">
                     <p>Username :</p>
                     <input type="text" className="flex-1 rounded-[5px] outline-none focus:ring-2 focus:ring-cyan-300 border border-gray-500 text-right" value={profileForm.username} onChange={(e)=>{setProfileForm(prevInfo=>({...prevInfo,username:e.target.value.trim()}))}}/>
                 </div>
-                <div className="flex flex-wrap items-center justify-between bg-gray-600 py-1 px-2 font-bold rounded-[5px] 2xl:text-4xl 2xl:px-5 2xl:py-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 bg-gray-600 py-1 px-2 font-bold rounded-[5px] 2xl:text-4xl 2xl:px-5 2xl:py-3">
                     <p>Email :</p>
                     <input type="text" className="flex-1 rounded-[5px] outline-none focus:ring-2 focus:ring-cyan-300 border border-gray-500 text-right" value={profileForm.email} onChange={(e)=>{setProfileForm(prevInfo=>({...prevInfo,email:e.target.value.trim()}))}}/>
                 </div>

@@ -79,7 +79,7 @@ function Expense() {
         </form>
 
         <div className="flex-1 h-110 overflow-x-none overflow-y-scroll scrollbar-hide 2xl:flex-2 2xl:h-200">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 2xl:gap-8">
             {allExpense && allExpense.map((expense)=>{
               return(
                 <ExpenseComponent expense={expense} key={expense._id}/>
