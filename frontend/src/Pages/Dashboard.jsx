@@ -74,9 +74,9 @@ function Dashboard() {
 
   return (
       state.isAuthenticated ? 
-      <div className='dashboard flex-1 justify-center rounded-[10px] pt-30 pb-10 px-4'>
+      <div className='dashboard flex-1 justify-center rounded-[10px] pt-30 pb-10 px-4 2xl:pt-45'>
         {/* FLEX CONTAINER */}
-        <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:gap-4">
+        <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:gap-4 2xl:gap-8">
           {/* LEFT - CHART */}
           <Chart/>
 
@@ -85,18 +85,18 @@ function Dashboard() {
         </div>
 
         {/* FLEX CONTAINER */}
-        <div className="flex flex-col justify-between items-start gap-4 mt-5 xs:flex-row">
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 flex-1 md:flex-2 w-full">
-            <TotalFinances getTotalIncome={getTotalIncome} border={"border-green-800"} text={"text-green-500"}/>
-            <TotalFinances getTotalIncome={getTotalExpense}  border={"border-red-500"} text={"text-red-500"}/>
+        <div className="flex flex-col justify-between items-start gap-4 mt-5 xs:flex-row 2xl:mt-10 2xl:gap-8">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 flex-1 md:flex-2 w-full 2xl:gap-8">
+            <TotalFinances getTotalIncome={getTotalIncome} border={"border-green-800"} textColor={"text-green-500"}/>
+            <TotalFinances getTotalIncome={getTotalExpense}  border={"border-red-500"} textColor={"text-red-500"}/>
 
-            <div className="rounded-[5px] border-2 border-cyan-800 p-2 font-bold flex flex-col md:text-2xl text-cyan-500">
+            <div className="rounded-[5px] border-2 border-cyan-800 p-2 font-bold flex flex-col md:text-2xl text-cyan-500 2xl:text-5xl 2xl:p-6 2xl:border-4 2xl:rounded-[10px]">
               <p>Profit Margin</p>
               <p>${getTotalIncome() - getTotalExpense()}</p>
             </div>
           </div>
 
-          <div className="flex flex-1 flex-col items-center justify-between gap-8 h-full w-full">
+          <div className="flex flex-1 flex-col items-center justify-between gap-8 h-full w-full 2xl:text-5xl 2xl:gap-10">
             <MinMaxFinances getMinMaxFinance={getMinMaxIncome} financeData={allIncome} title={"Income"}/>
             <MinMaxFinances getMinMaxFinance={getMinMaxExpense} financeData={allExpense} title={"Expense"}/>
           </div>

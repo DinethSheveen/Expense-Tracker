@@ -90,7 +90,7 @@ function Chart() {
   }
 
   return (
-    <div className="h-60 w-full flex-2 mx-auto bg-gray-900 rounded-[10px] p-2"><Line options={options} data={data}/></div>
+    <div className="h-60 w-full flex-2 mx-auto bg-gray-900 rounded-[10px] p-2 2xl:h-150"><Line options={options} data={data}/></div>
   )
 }
 
