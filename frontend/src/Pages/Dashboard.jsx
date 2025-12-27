@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import Chart from "../Components/Chart"
 import { TransactionContext } from "../Hooks/TransactionContextProvider"
 import MinMaxFinances from "../Components/MinMaxFinances"
@@ -6,11 +6,16 @@ import TotalFinances from "../Components/TotalFinances"
 import RecentHistory from "../Components/RecentHistory"
 import { AuthContext } from "../Hooks/AuthContextProvider"
 import { Navigate } from "react-router-dom"
+import PieChart from "../Components/PieChart"
 
 function Dashboard() {
 
   const {allIncome,getAllIncome,allExpense,getAllExpense} = useContext(TransactionContext)
   const {state} = useContext(AuthContext)
+
+  // STATE TO MANAGE THE DISPLAY CHART TYPE
+    const [chartType, setChartType] = useState("income") 
+    const [exportAs,setExportAs] = useState("Word")
   
   // GETTING THE TOTAL INCOME
   const getTotalIncome = ()=>{
@@ -84,8 +89,8 @@ function Dashboard() {
           <RecentHistory allIncome={allIncome} allExpense={allExpense}/>
         </div>
 
-        {/* FLEX CONTAINER */}
-        <div className="flex flex-col justify-between items-start gap-4 mt-5 xs:flex-row 2xl:mt-10 2xl:gap-8">
+        {/* FLEX CONTAINER - ANALYSIS*/}
+        <div className="flex flex-col justify-between items-start gap-4 my-5 xs:flex-row 2xl:mt-10 2xl:gap-8">
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 flex-1 md:flex-2 w-full 2xl:gap-8">
             <TotalFinances getTotalIncome={getTotalIncome} border={"border-green-800"} textColor={"text-green-500"}/>
             <TotalFinances getTotalIncome={getTotalExpense}  border={"border-red-500"} textColor={"text-red-500"}/>
@@ -99,6 +104,36 @@ function Dashboard() {
           <div className="flex flex-1 flex-col items-center justify-between gap-8 h-full w-full 2xl:text-5xl 2xl:gap-10">
             <MinMaxFinances getMinMaxFinance={getMinMaxIncome} financeData={allIncome} title={"Income"}/>
             <MinMaxFinances getMinMaxFinance={getMinMaxExpense} financeData={allExpense} title={"Expense"}/>
+          </div>
+        </div>
+
+        {/* FLEX CONTAINER - ANALYTICS */}
+        <div className="flex flex-col justify-between items-center gap-4 my-5 overflow-hidden md:flex-row 2xl:mt-10 2xl:gap-8">
+          <div className="flex flex-col flex-1">
+            <PieChart chartType={chartType} setChartType={setChartType}/>
+            <div className="flex items-center justify-center gap-2 my-5">
+                <div className={`p-2 bg-gray-700 rounded-[5px] cursor-pointer hover:bg-gray-800 ${chartType ==="expense"?"opacity-45":""}`} onClick={()=>{setChartType("income")}}>Income Chart</div>
+                <div className={`p-2 bg-gray-700 rounded-[5px] cursor-pointer hover:bg-gray-800 ${chartType ==="income"?"opacity-45":""}`} onClick={()=>{setChartType("expense")}}>Expense Chart</div>
+            </div>
+          </div>
+          <div className="flex-1">
+            <div className="flex flex-col items-center justify-between flex-wrap py-2 px-4 gap-2 bg-gray-800 rounded-2xl">
+              <p className="font-bold text-left w-full text-2xl">Export chart</p>
+              <hr className="text-white w-full"/>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam culpa est recusandae omnis obcaecati voluptas suscipit possimus hic sed, </p>
+              <div className="flex justify-center items-center gap-2 flex-wrap">
+                <div className="bg-gray-700 px-5 py-1 rounded-[5px]">Daily</div>
+                <div className="bg-gray-700 px-5 py-1 rounded-[5px]">Weekly</div>
+                <div className="bg-gray-700 px-5 py-1 rounded-[5px]">Monthly</div>
+              </div>
+              <div className="flex">
+                <p>Export report as : </p> 
+                <select value={exportAs} onChange={(e)=>{setExportAs(e.target.value)}}>
+                  <option value="Word" className="bg-gray-700">Word</option>
+                  <option value="PDF" className="bg-gray-700">PDF</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
       </div>
