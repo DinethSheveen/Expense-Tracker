@@ -7,6 +7,8 @@ import RecentHistory from "../Components/RecentHistory"
 import { AuthContext } from "../Hooks/AuthContextProvider"
 import { Navigate } from "react-router-dom"
 import PieChart from "../Components/PieChart"
+import jsPDF from "jspdf"
+import autoTable from "jspdf-autotable"
 
 function Dashboard() {
 
@@ -15,7 +17,7 @@ function Dashboard() {
 
   // STATE TO MANAGE THE DISPLAY CHART TYPE
     const [chartType, setChartType] = useState("income") 
-    const [exportAs,setExportAs] = useState("Word")
+    const [loading,setLoading] = useState(false)
   
   // GETTING THE TOTAL INCOME
   const getTotalIncome = ()=>{
@@ -71,6 +73,60 @@ function Dashboard() {
     
     return [minExpense,maxExpense];
   }  
+
+  // GENERATING THE PDF REPORT
+  const generatePdf = ()=>{
+    setLoading(true)
+    const doc = jsPDF()
+
+    let currentY = 10
+
+    // TITLE
+    doc.text("Financial-Report",80,currentY)
+
+    // TABLE DATA
+    const expenseTableData = allExpense && allExpense.map(expense => [
+      expense.title,
+      expense.amount,
+      expense.category,
+      expense.date.substring(0,10)
+    ])
+
+    // EXPENSES TABLE
+    currentY +=10
+    doc.text("Expenses",24,currentY)
+    currentY+=5
+    
+    // GENERATE TABLE IN PDF
+    autoTable(doc,{
+      startY : currentY,
+      head: [["Title","Amount", "Category", "Date"]],
+      body: expenseTableData,
+    });
+
+    const incomeTableDate = allIncome && allIncome.map((income)=>[
+      income.title,
+      income.amount,
+      income.category,
+      income.date.substring(0,10)
+    ])
+
+    // INCOMES TABLE
+    currentY +=35
+    doc.text("Income",24,currentY)
+    currentY+=5
+
+    autoTable(doc,{
+      startY : currentY,
+      head : [["Title","Amount","Category","Date"]],
+      body : incomeTableDate
+    })
+
+    doc.save("Finances.pdf")
+    setTimeout(()=>{
+      setLoading(false)
+    },2000)
+  }
   
   useEffect(()=>{
     getAllIncome()
@@ -120,18 +176,9 @@ function Dashboard() {
             <div className="flex flex-col items-center justify-between flex-wrap py-2 px-4 gap-2 bg-gray-800 rounded-2xl">
               <p className="font-bold text-left w-full text-2xl">Export chart</p>
               <hr className="text-white w-full"/>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam culpa est recusandae omnis obcaecati voluptas suscipit possimus hic sed, </p>
-              <div className="flex justify-center items-center gap-2 flex-wrap">
-                <div className="bg-gray-700 px-5 py-1 rounded-[5px]">Daily</div>
-                <div className="bg-gray-700 px-5 py-1 rounded-[5px]">Weekly</div>
-                <div className="bg-gray-700 px-5 py-1 rounded-[5px]">Monthly</div>
-              </div>
+              <p>Want a clean summary of your finances? Download the PDF report to view, store, or share your expense records anytime.</p>
               <div className="flex">
-                <p>Export report as : </p> 
-                <select value={exportAs} onChange={(e)=>{setExportAs(e.target.value)}}>
-                  <option value="Word" className="bg-gray-700">Word</option>
-                  <option value="PDF" className="bg-gray-700">PDF</option>
-                </select>
+                <button onClick={generatePdf} className="py-2 px-4 bg-gray-600 rounded-[5px] cursor-pointer hover:bg-gray-500 active:bg-gray-700">{loading?"Exporting...":"Export pdf"}</button> 
               </div>
             </div>
           </div>
