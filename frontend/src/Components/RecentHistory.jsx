@@ -21,9 +21,9 @@ function RecentHistory({allIncome,allExpense}) {
     const recentFinances = allFinances.slice(0,3)
 
   return (
-    <div className="history flex-1 w-full px-4 md:w-auto md:px-0 overflow-scroll">
+    <div className="history flex-1 w-full px-4 md:w-auto md:px-0">
         <p className="text-center mb-3 font-bold 2xl:text-5xl 2xl:mb-6">Recent History</p>
-        <div className="flex flex-col gap-5 2xl:text-3xl 2xl:gap-7 overflow-scroll">
+        <div className="flex flex-col gap-5 2xl:text-3xl 2xl:gap-7">
             {
                 recentFinances.length!==0?
                 recentFinances.map((finance)=>{

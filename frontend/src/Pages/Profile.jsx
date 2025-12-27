@@ -80,8 +80,10 @@ function Profile({loading,setLoading}) {
             setProfileError(null)
             setProfileSuccess(response.data.message)
             setLoading(false)
-        } catch{
-            setProfileSuccess(null)           
+        } catch (error){
+            setLoading(false)
+            setProfileSuccess(null)  
+            setProfileError(error.response.data.message)         
         }
 
         setTimeout(()=>{
@@ -121,8 +123,8 @@ function Profile({loading,setLoading}) {
                 <p className="2xl:text-5xl">Member since : {state.user && dayjs(state.user.createdAt).format("MMMM-DD (YYYY)")}</p>
 
                 {/* ALERTS */}
-                {success && <div className="p-3 border-l-4 border-green-500 bg-green-300 text-green-800 font-semibold rounded-lg shadow-sm 2xl:shadow-2xl 2xl:border-l-15 2xl:p-10 2xl:my-5 2xl:text-5xl">{success}</div>}
-                {error && <div className="p-3 border-l-4 border-red-500 bg-red-300 text-red-800 font-semibold rounded-lg shadow-sm 2xl:shadow-2xl 2xl:border-l-15 2xl:p-10 2xl:my-5 2xl:text-5xl">{error}</div>}
+                {success && <div className="p-3 border-l-4 border-green-500 bg-green-300 text-green-800 font-semibold rounded-lg shadow-sm 2xl:shadow-2xl 2xl:border-l-15 2xl:p-10 2xl:my-5 2xl:text-4xl">{success}</div>}
+                {error && <div className="p-3 border-l-4 border-red-500 bg-red-300 text-red-800 font-semibold rounded-lg shadow-sm 2xl:shadow-2xl 2xl:border-l-15 2xl:p-10 2xl:my-5 2xl:text-4xl">{error}</div>}
             </div>
 
             {/* USER INFORMATION */}
@@ -143,8 +145,8 @@ function Profile({loading,setLoading}) {
 
                 <Button loading={loading} buttonText="Update Profile" />
                 {/* ALERTS */}
-                {profileSuccess && <div className="p-3 border-l-4 border-green-500 bg-green-200 text-green-700 font-semibold rounded-lg shadow-sm w-[50%]">{profileSuccess}</div>}
-                {profileError && <div className="p-3 border-l-4 border-red-500 bg-red-200 text-red-700 font-semibold rounded-lg shadow-sm md:w-[50%]">{profileError}</div>}
+                {profileSuccess && <div className="p-3 border-l-4 border-green-500 bg-green-200 text-green-700 font-semibold rounded-lg shadow-sm w-[50%] 2xl:text-4xl 2xl:border-l-8 2xl:py-6">{profileSuccess}</div>}
+                {profileError && <div className="p-3 border-l-4 border-red-500 bg-red-200 text-red-700 font-semibold rounded-lg shadow-sm md:w-[50%] 2xl:text-4xl 2xl:border-l-8 2xl:py-6">{profileError}</div>}
             </form>
 
             {/* PASSWORD UPDATING */}
@@ -164,8 +166,8 @@ function Profile({loading,setLoading}) {
                 </div>
                 <Button loading={loading} buttonText="Change Password"/>
                 {/* ALERTS */}
-                {passwordSuccess && <div className="p-3 border-l-4 border-green-500 bg-green-200 text-green-700 font-semibold rounded-lg shadow-sm w-[50%]">{passwordSuccess}</div>}
-                {passwordError && <div className="p-3 border-l-4 border-red-500 bg-red-200 text-red-700 font-semibold rounded-lg shadow-sm md:w-[50%]">{passwordError}</div>}
+                {passwordSuccess && <div className="p-3 border-l-4 border-green-500 bg-green-200 text-green-700 font-semibold rounded-lg shadow-sm w-fit 2xl:text-4xl 2xl:border-l-8 2xl:py-6">{passwordSuccess}</div>}
+                {passwordError && <div className="p-3 border-l-4 border-red-500 bg-red-200 text-red-700 font-semibold rounded-lg shadow-sm md:w-[50%] 2xl:text-4xl 2xl:border-l-8 2xl:py-6">{passwordError}</div>}
             </form>
         </div>
     </div>
